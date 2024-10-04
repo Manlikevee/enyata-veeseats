@@ -24,7 +24,7 @@ const page = () => {
 
     <div className="dashboard">
         <p></p>
-        <h4></h4>
+   <p></p>
         <div className="tabs">
         {tabs.map((tab) => (
           <h4
@@ -36,7 +36,7 @@ const page = () => {
           </h4>
         ))}
       </div>
-      <Rolefilter/>
+      {/* <Rolefilter/> */}
       <>
         {activeTab === 0 && (
         <div>
@@ -46,7 +46,7 @@ const page = () => {
              {/* Effortlessly handle your billing and invoices right here. */}
              </div>
              </div>
-<br />
+
 <div className="invoicetableflex">
 <div className="invoicetable tablehead">
               <div className="invdata">Role Title</div>
@@ -121,7 +121,7 @@ radio_button_checked
                {/* Effortlessly handle your billing and invoices right here. */}
                </div>
                </div>
-<br />
+
 <div className="invoicetableflex">
 <div className="invoicetable tablehead">
                 <div className="invdata">Role Title</div>
@@ -167,7 +167,7 @@ radio_button_checked
                {/* Effortlessly handle your billing and invoices right here. */}
                </div>
                </div>
-<br />
+
 <div className="invoicetableflex">
 <div className="invoicetable tablehead">
                 <div className="invdata">Role Title</div>
@@ -190,7 +190,7 @@ radio_button_checked
           myref = {item.ref}
           status={item.is_paidfor}  
           key={index}
-          userdata={userdata}
+          userdata={individualsdata}
           axiosInstance={axiosInstance}
         />
       ))
@@ -214,7 +214,7 @@ radio_button_checked
                {/* Effortlessly handle your billing and invoices right here. */}
                </div>
                </div>
-<br />
+
 <div className="invoicetableflex">
 <div className="invoicetable tablehead">
                 <div className="invdata">Role Title</div>

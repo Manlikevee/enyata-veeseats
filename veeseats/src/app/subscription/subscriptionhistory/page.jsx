@@ -1,11 +1,12 @@
 import React from 'react'
 import Layout from "@/components/dashboard/Layout";
 import Titleddiv from "@/components/Titleddiv";
+import Link from 'next/link';
 
 const generateRandomInvoices = (numInvoices) => {
     const invoices = [];
     for (let i = 0; i < numInvoices; i++) {
-      const invoiceNumber = `#${Math.floor(Math.random() * 100000)}`;
+      const invoiceNumber = `${Math.floor(Math.random() * 100000)}`;
       const date = new Date().toLocaleDateString();
       const plan = ['Basic Plan', 'Premium Plan', 'Pro Plan'][Math.floor(Math.random() * 3)];
       const amount = `$${(Math.random() * 1000 + 200).toFixed(2)}`;
@@ -111,7 +112,7 @@ const page = () => {
                </div>
 
                {invoices.map((invoice, index) => (
-        <div key={index} className="invoicetable">
+        <Link href={`/services/transaction/${invoice.invoiceNumber}`} key={index} className="invoicetable">
           <div className="invdata">{invoice.invoiceNumber}</div>
           <div className="invdata">{invoice.date}</div>
           <div className="invdata">{invoice.plan}</div>
@@ -119,7 +120,7 @@ const page = () => {
           <div className="invdata">
             <span className={invoice.status === 'Paid' ? 'paid' : 'unpaid'}>{invoice.status}</span>
           </div>
-        </div>
+        </Link>
       ))}
                
 </div>

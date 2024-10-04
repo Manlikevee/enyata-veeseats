@@ -120,6 +120,7 @@ const Rolematchview = () => {
         { value: 'fundraising', label: 'Fundraising' },
         { value: 'grant_writing', label: 'Grant Writing' },
     ]);
+
     const areasOfExpertise = [
         "Frontend Development",
         "Backend Development",
@@ -163,6 +164,7 @@ const Rolematchview = () => {
 
     const handleChange = (selected) => {
         setSelectedSkills(selected);
+        console.log(selectedSkills)
       };
     const [selectedSkills, setSelectedSkills] = useState([]);
     const tabs = [

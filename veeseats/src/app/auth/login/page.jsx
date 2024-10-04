@@ -279,7 +279,7 @@ const page = () => {
     {/* <img src="https://boardseats.io/documents/20121/0/Boardseats+Logo.png/" alt=""  className='mylogoimg'/> */}
     
 
-    <p className='loginhelper'>Welcome to BoardSeats.</p>
+    <p className='loginhelper'>Welcome to Veeseats.</p>
 
     <div className="centered-text">Signup as</div>
     <div className="applyforroleflex">
@@ -311,7 +311,7 @@ Executives
         id="current-password" 
         icontype='lock'
       />
-<small className='rightside'  onClick={handleClick}>Forgot Password?</small>
+{/* <small className='rightside'  onClick={handleClick}>Forgot Password?</small> */}
 {isLoading ?        
    <button id="loadingBtn" className='mybtn' >
 

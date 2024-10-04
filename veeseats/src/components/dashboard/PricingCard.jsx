@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const PricingCard = ({ title, price, details, features, onClick, index }) => {
@@ -12,10 +13,10 @@ const PricingCard = ({ title, price, details, features, onClick, index }) => {
         <div className="pricepill">{title}</div>
         <div className="priceamount">₦ {price}</div>
         <div className="pricedeets">{details}</div>
-        <div className="planbtn" onClick={handleButtonClick}>
+        <Link href={'/user-profile'} className="planbtn" >
           Get started
           <span className="material-symbols-outlined">chevron_right</span>
-        </div>
+        </Link>
       </div>
       <div className="pricebottom">
         {features.map((feature, index) => (

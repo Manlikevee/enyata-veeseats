@@ -11,7 +11,8 @@ const Inputcomponent = ({inputState, setInputState, label, inputType, name, id, 
            value={inputState} placeholder={placeholder}   readOnly={readonly ? true : undefined} 
         onChange={(e) => setInputState(e.target.value)}   />
     </div>
-    </div>  )
+    </div> 
+     )
 }
 
 export default Inputcomponent

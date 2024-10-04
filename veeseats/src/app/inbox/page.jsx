@@ -1,6 +1,7 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';
+import Cookies from "js-cookie";
 import Loginlayout from '@/components/dashboard/Loginlayout'
 import Rolefilter from '@/components/dashboard/Rolefilter'
 import Rolecard from '@/components/Rolecard';
@@ -13,6 +14,10 @@ import Topnav from '@/components/Topnav';
 import ReactTimeAgo from 'react-time-ago';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
+import { VeeContext } from '@/components/context/Chatcontext';
+import Messagegenerator from '@/components/chattypes/Messagegenerator';
+import Pusher from 'pusher-js';
+
 
 // Add locale-specific rules.
 TimeAgo.addDefaultLocale(en);
@@ -40,20 +45,31 @@ const chatData = [
     time: new Date()
   }
 ];
-
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+    
 
 
 const page = () => {
+  const { individualsdata, chatdata, newupdateactiveuser, fdata, activechat, activechatdata, conversationdata, axiosInstance, setconversationdata, sortmessages } = useContext(VeeContext);
   const [windowHeight, setWindowHeight] = useState(0); // Initial state set to 0
   const [messages, setMessages] = useState(chatData);
   const [newMessage, setNewMessage] = useState('');
   const [isShowing, setIsShowing] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [showsearch, setshowsearch] = useState(false);
+
+
   
   const toggleSidebar = () => {
     setIsSidebarOpen((prevState) => !prevState);
     setIsOverlayOpen((prevState) => !prevState);
+  };
+  const togglesearch = () => {
+    setshowsearch((prevState) => !prevState);
+
   };
 
 
@@ -89,6 +105,75 @@ const handleAddMessage = () => {
     }, 100); // Delay to ensure messages are rendered first
   }
 };
+
+
+async function postMessage() {
+  const uniqueid = activechatdata?.message_id
+  const payloaddata = {
+    data: {
+      id: getRandomNumber(1, 990000),
+      type: "text",
+       sender: "sent",
+       from: "victor",
+       message: newMessage,
+       datetime: new Date(),
+    }
+  };
+
+  try {
+    // Sending a POST request to the provided URL with the payload data
+    const response = await axiosInstance.post(`/messageportal/${activechatdata?.message_id}/`, {
+     payloaddata  // Spread the payloaddata object to send it as the body
+    });
+
+    // You can handle the response if necessary
+    console.log('Response:', response.data);
+    if (uniqueid == activechatdata?.message_id){
+      setconversationdata(response.data.messageserialized.testj)
+      // sortmessages(response.data.allmessages)
+    }
+
+    setNewMessage('')
+
+    return response.data;  // Optionally return the data
+  } catch (error) {
+    // Handle any error that occurs during the request
+    console.error('Error posting message:', error.response ? error.response.data : error.message);
+    
+    // Optionally throw the error to handle it higher up in the call stack
+    throw error;
+  }
+}
+
+useEffect(() => {
+  const access = Cookies.get("access_token");
+  const arrayToken = access.split('.');
+  const tokenPayload = JSON.parse(atob(arrayToken[1]));
+  const pusher = new Pusher('48ec4ad056af9b749e55', {
+    cluster: 'mt1',
+  });
+
+  // Subscribe to the channel and event you want to listen to
+  const channel = pusher.subscribe(`message-channel-${tokenPayload?.user_id}`);
+  channel.bind('new-message', (data) => {
+    // Update the message list when a new message is received
+    setconversationdata(data.messageserialized.testj);
+
+    // if (activechatdata?.message_id && data?.messageserialized?.messageid?.messageid == activechatdata?.message_id){
+   
+      
+    // }
+    fdata()
+    // sortmessages(data.allmessages)
+    console.log('newwwwwwwwwwww messsssssssssageeeeeeeeeeeeee')
+  }); 
+
+  // Cleanup function to unsubscribe when the component is unmounted
+  return () => {
+    channel.unbind_all();
+    channel.unsubscribe();
+  };
+}, []); // Only run this effect once on mount
 
 
   useEffect(() => {
@@ -154,19 +239,45 @@ const handleAddMessage = () => {
   
     <div id="top"></div>
     <div className="vmessflexsticky">
+<div className="vrdtop">
 
-<div className="messageflextitle">Messages</div>
-<div className="justflex jfs">
+</div>
+<div className="messageflextitle jcsb">Messages  <span className="material-symbols-outlined" onClick={togglesearch}>
+search
+</span> </div>
+
+{
+  showsearch && (<div className="justflex jfs">
   <div className="filterbox">
     <div className="filtersearch">
-      <input placeholder="Find roles" type="text" />{" "}
+      <input placeholder="Find Message" type="text" />{" "}
       <span className="material-symbols-outlined">search</span>
     </div>
   </div>
-</div>
+</div>)
+}
+
 
     </div>
-    <Messagecard title={'Veeseats'} body={'Get Started With Veeseats'} toggleClass={toggleClass}/>
+
+    {chatdata?.length > 0 ? (
+        <>
+    {chatdata?.map((info, index) => (
+
+<div
+className={`chatbubbled chatnum ${info.userid === activechat ? 'activebubble' : ''}`}
+key={index}
+onClick={() => newupdateactiveuser(info?.userid)}
+>
+  {info?.userid}
+<Messagecard title={info.name} body={'Get Started With Veeseats'} toggleClass={toggleClass}/>
+</div>
+
+    ))}
+    </>
+      ) : ('Loadinggggggggggggg') }
+
+
  
 
     <a href="#top" id="scroll-to-top-btn">
@@ -224,7 +335,7 @@ arrow_back
 <div className='chatContainer' id="chatContainer">
 
 
-{messages.map((msg) => (
+{/* {messages.map((msg) => (
           <div key={msg.id} className={`complete${msg.type === 'sent' ? 'messagesent' : 'messagerec'}`}>
             <div className={msg.type === 'sent' ? 'messagesent' : 'messagerec'} id={msg.id}>
               <div className="edgecontrol">
@@ -242,7 +353,9 @@ arrow_back
               </div>
             </div>
           </div>
-        ))}
+        ))} */}
+
+{activechatdata && conversationdata && (<Messagegenerator messagedata={conversationdata} />)}
 
 
 <div id="emptydiv"></div>
@@ -262,7 +375,7 @@ arrow_back
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type your message here..."
         />
-        <span className="material-symbols-outlined" onClick={handleAddMessage}>
+        <span className="material-symbols-outlined" onClick={postMessage}>
 send
 </span>
       </div>

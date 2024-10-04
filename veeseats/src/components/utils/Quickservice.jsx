@@ -10,7 +10,7 @@ const Quickservice = () => {
       </div>
     </div>
     <div className="quicktext">
-      Super useful and easy to with over 100+ customisations!
+    Bias-free hiring with skills tests
     </div>
   </div>
   <div className="quickbox" >
@@ -20,7 +20,8 @@ const Quickservice = () => {
       </div>
     </div>
     <div className="quicktext">
-      Super useful and easy to with over 100+ customisations!
+    Ready-made hiring pipelines
+& hiring steps
     </div>
   </div>
   <div className="quickbox " >
@@ -30,7 +31,7 @@ const Quickservice = () => {
       </div>
     </div>
     <div className="quicktext">
-      Super useful and easy to with over 100+ customisations!
+    Expert-made homework assignments
     </div>
   </div>
 </div>

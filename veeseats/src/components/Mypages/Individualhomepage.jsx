@@ -10,9 +10,11 @@ import Messagecard from '@/components/Messagecard';
 import Link from 'next/link';
 import Lazytext from '../Lazyloading/Lazytext';
 import { VeeContext } from '../context/Chatcontext';
+import Roleloader from '../utils/Roleloader';
+import Notfoundcomponent from '../utils/Notfoundcomponent';
 
 const Individualhomepage = () => {
-  const {loadingsaves,loadingapplications ,allJobs,allSavedJobs,  applications, roleMatch, roleMatchLoading, loadingcards, joberror } = useContext(VeeContext);
+  const {loadingsaves,loadingapplications ,allJobs,allSavedJobs,  applications, roleMatch, roleMatchLoading, loadingcards, joberror, userprofile } = useContext(VeeContext);
 
   const shuffledJobs = allJobs.sort(() => 0.5 - Math.random());
 
@@ -26,7 +28,7 @@ const Individualhomepage = () => {
         <br />
         <div className="sectiontitle col">
           <div>
-            Welcome back, Victor Odah 
+            Welcome back, {userprofile?.user?.first_name + '' + userprofile?.user?.last_name}
           </div>
           <small>Here is what we have for you today</small>
         </div>
@@ -111,9 +113,35 @@ loop={false}
 
             <br />
             <div className="centered-text">Today</div>
-            <br />
+       
             <div className="dashroles">
   
+            <div className="justflex jfs">
+  <div className="filterbox">
+    <div className="filtersearch">
+      <input placeholder="Find roles" type="text" />{" "}
+      <span className="material-symbols-outlined">search</span>
+    </div>
+  </div>
+</div>
+
+{selectedJobs?.length <= 0 && !loadingcards &&  (
+<Notfoundcomponent/>
+)}
+
+
+{
+loadingcards && (
+<>
+<Roleloader/>
+
+<Roleloader/>
+
+<Roleloader/>
+</>
+  )
+}
+
 
  <>
       {selectedJobs?.length > 0 && !loadingcards && (

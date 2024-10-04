@@ -48,7 +48,7 @@ modules={[Navigation]} // Use the Navigation module here
       <div className="displayimg">
       <img src="/illus/image(18).png" alt="" />
       </div>
-      <div className="displaytitle">Emmalee Mclain</div>
+      <div className="displaytitle">Victor Odah</div>
       <div className="displaybody">
       Product Designer
       </div>
@@ -65,7 +65,7 @@ modules={[Navigation]} // Use the Navigation module here
       <div className="displayimg">
       <img src="/illus/image(5).png" alt="" />
       </div>
-      <div className="displaytitle">Emmalee Mclain</div>
+      <div className="displaytitle">Victor Odah</div>
       <div className="displaybody">
       Product Designer
       </div>
@@ -79,7 +79,7 @@ modules={[Navigation]} // Use the Navigation module here
       <div className="displayimg">
       <img src="/illus/image6.png" alt="" />
       </div>
-      <div className="displaytitle">Emmalee Mclain</div>
+      <div className="displaytitle">Victor Odah</div>
       <div className="displaybody">
       Product Designer
       </div>
@@ -94,7 +94,7 @@ modules={[Navigation]} // Use the Navigation module here
       <div className="displayimg">
         <img src="/illus/image(4).png" alt="" />
       </div>
-      <div className="displaytitle">Emmalee Mclain</div>
+      <div className="displaytitle">Victor Odah</div>
       <div className="displaybody">
       Product Designer
       </div>

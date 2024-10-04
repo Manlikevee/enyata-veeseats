@@ -54,7 +54,7 @@ const Corporatesidelinks = ({testfunction}) => {
     </Link> */}
 
     <div>
-      <Link href="#" className={`dashflex ${pathname.startsWith('/corporate/manage-applications')||  pathname === '/visitorslist' || pathname === '/find-a-role' ||  pathname.startsWith('/view-role/') ||  pathname === '/analytics' ? 'active' : ''}`}    onClick={dropdown}>
+      <Link href="#" className={`dashflex ${pathname.startsWith('/corporate/manage-applications')||  pathname.startsWith('/services/transaction') || pathname === '/find-a-role' ||  pathname.startsWith('/view-role/') || pathname.startsWith('/admin/') ||  pathname === '/analytics' ? 'active' : ''}`}    onClick={dropdown}>
         <div className="dashflexicon">
           <span className="material-symbols-outlined"> settings_input_component </span>
         </div>
@@ -64,6 +64,9 @@ const Corporatesidelinks = ({testfunction}) => {
           expand_more
           </span>
       </Link>
+
+
+
       <div className="dropdowncontent" id="ddown" ref={dropdownContentRef}>
         <div className="innerdashflexs" >
           <Link href="/corporate/manage-applications/shopping-cart" className={`dashflex ${pathname === '/corporate/manage-applications/shopping-cart' ? 'activesub' : ''}`} >
@@ -82,14 +85,18 @@ const Corporatesidelinks = ({testfunction}) => {
       <div className="dashflextext">Find a role</div>
     </Link>
 
-          <div href="#" className="dashflex">
-            <div className="dashflexicon">
-              <span className="material-symbols-outlined">
-                store
-                </span>
-            </div>
-            <div className="dashflextext"> Role Match </div>
-          </div>
+
+    <Link href="/corporate/events" className={`dashflex ${pathname === '/corporate/events' ||  pathname.startsWith('/corporate/events')  ? 'active' : ''}`}>
+      <div className="dashflexicon">
+      <span className="material-symbols-outlined">
+edit_document
+</span>
+      </div>
+      <div className="dashflextext">Training</div>
+    </Link>
+
+
+
           
           <Link href="/services/ourservices" className={`dashflex ${pathname === '/services/ourservices' ? 'activesub' : ''}`}>
             <div className="dashflexicon">
@@ -100,32 +107,10 @@ const Corporatesidelinks = ({testfunction}) => {
             <div className="dashflextext">Our Services</div>
           </Link>
     
-          <Link href="#" className="dashflex">
-            <div className="dashflexicon">
-              <span className="material-symbols-outlined">
-                app_blocking
-                </span>
-            </div>
-            <div className="dashflextext">BlackList Visitor</div>
-          </Link>
-    
-          <Link href="/qrcode" className={`dashflex ${pathname === '/qrcode' ? 'activesub' : ''}`}>
-            <div className="dashflexicon">
-              <span className="material-symbols-outlined">
-                qr_code_scanner
-                </span>
-            </div>
-            <div className="dashflextext">ID Tags</div>
-          </Link>
 
-          <Link href="/auth/login" className={`dashflex ${pathname === '/auth/login' ? 'activesub' : ''}`}>
-            <div className="dashflexicon">
-              <span className="material-symbols-outlined">
-                qr_code_scanner
-                </span>
-            </div>
-            <div className="dashflextext">Analytics</div>
-          </Link>
+
+
+     
       
         </div>
       
@@ -139,7 +124,7 @@ const Corporatesidelinks = ({testfunction}) => {
       <div className="dashflextext">Inbox</div>
     </Link>
     
-    <Link href="/user-profile" className={`dashflex ${pathname === '/user-profile' ? 'active' : ''}`}>
+    <Link href="/corporate/profile" className={`dashflex ${pathname === '/corporate/profile' ? 'active' : ''}`}>
       <div className="dashflexicon">
         <span className="material-symbols-outlined"> person </span>
       </div>

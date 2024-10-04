@@ -11,6 +11,8 @@ import { toast } from 'sonner'
 import { VeeContext } from '../context/Chatcontext';
 import Mylogocomponent from '../Mylogocomponent';
 import Profileupdatesidebar from './Profileupdatesidebar';
+import { jwtDecode } from 'jwt-decode';
+import Eventssidelink from './Eventssidelink';
 const Sidebar = ({isSidebarOpen,  toggleSidebar}) => {
     const pathname = usePathname();
     const [windowHeight, setWindowHeight] = useState(); // Initial state set to 0
@@ -31,12 +33,15 @@ const Sidebar = ({isSidebarOpen,  toggleSidebar}) => {
       toast.success(`See You Soon`);
       
       router.replace('/auth/login')
-  
-    
+      window.location.href = '/auth/login';
+      
     }
 
     useEffect(() => {
-      if (pathname !== '/accounts/accountupdate' && userprofile && !userprofile.profile_verified && !userdata.is_corporate && profileloaded   ) {
+      let accessToken = Cookies.get("access_token");
+      const decodedToken = jwtDecode(accessToken);
+      if (pathname !== '/accounts/accountupdate' && userprofile && !userprofile.profile_verified && userdata && !userdata.is_corporate && profileloaded && accessToken && !decodedToken.is_corporate   ) {
+        console.log(userdata)
         router.replace('/accounts/accountupdate');
         toast.info('Kindly Complete Your Profile Update')
       }
@@ -93,16 +98,19 @@ function testfunction(){
 
         <div className="sidebardatas">
 
-{(pathname.startsWith('/accounts/accountupdate')) ? (
-<Profileupdatesidebar/>
-) : 
-<>
-{(pathname.startsWith('/corporate') || individualsdata?.is_corporate) ? 
-    <Corporatesidelinks testfunction={testfunction} /> : 
-    <Individualsidelinks testfunction={testfunction} />
-}
-</>
-}
+        {pathname.startsWith('/accounts/accountupdate') ? (
+  <Profileupdatesidebar />
+) : pathname.startsWith('/corporate/events') ? (
+  <Eventssidelink testfunction={testfunction} />
+) : (
+  <>
+    {(pathname.startsWith('/corporate') || individualsdata?.is_corporate) ? (
+      <Corporatesidelinks testfunction={testfunction} />
+    ) : (
+      <Individualsidelinks testfunction={testfunction} />
+    )}
+  </>
+)}
  
 
 

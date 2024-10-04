@@ -32,11 +32,20 @@ DEBUG = True
 ALLOWED_HOSTS = ['*', '.vercel.app', '.now.sh']
 
 # Application definition
+if DEBUG:
+    import mimetypes
+
+    mimetypes.add_type("application/javascript", ".js", True)
+
+INTERNAL_IPS = ["127.0.0.1", "::1"]
 
 INSTALLED_APPS = [
+    "debug_toolbar",
     'django.contrib.admin',
     'django.contrib.auth',
+    'corsheaders',
     'django.contrib.contenttypes',
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -48,12 +57,25 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'taggit',
     'taggit_templatetags2',
-    'corsheaders',
     'dashboard',
     'users'
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+]
+
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+]
 
 REST_FRAMEWORK = {
 
@@ -67,10 +89,11 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -101,12 +124,11 @@ WSGI_APPLICATION = 'veejobapi.wsgi.application'
 
 SIMPLE_JWT = {
     # "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=92),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=100),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
-
     "ALGORITHM": "HS256",
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
@@ -151,6 +173,7 @@ SIMPLE_JWT = {
 #     }
 # }
 
+G_C_I = '138849558759-tcsco1sma1pjvobkt5io0lt4g07e1mod.apps.googleusercontent.com'
 
 DATABASES = {
     'default': {
@@ -212,14 +235,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 
-EMAIL_HOST = 'cellafinance.com'
-DEFAULT_FROM_EMAIL = 'support@cellafinance.com'
+EMAIL_HOST = 'smtp.office365.com'
+DEFAULT_FROM_EMAIL = str(os.getenv('EMAIL_USER'))
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'support@cellafinance.com'
-EMAIL_HOST_PASSWORD = 'TestPractice'
+EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
+EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
@@ -248,3 +271,9 @@ cloudinary.config(
     api_key=str(os.getenv('APIKEY')),
     api_secret=str(os.getenv('API_SECRET'))
 )
+
+PUSHER_APP_ID = str(os.getenv('PUSHER_APP_ID'))
+PUSHER_KEY = str(os.getenv('PUSHER_KEY'))
+PUSHER_SECRET = str(os.getenv('PUSHER_SECRET'))
+PUSHER_CLUSTER = str(os.getenv('PUSHER_CLUSTER'))
+WA_TOKEN = str(os.getenv('WHATSAPP_TOKEN'))

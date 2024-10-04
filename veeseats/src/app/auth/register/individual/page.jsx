@@ -194,7 +194,7 @@ const page = () => {
 
       />
 </div>
-<small>By signing up, I agree to the terms of use and <Link href={'/privacy-policy'}>policy of the BoardSeats.</Link> </small>
+<small>By signing up, I agree to the terms of use and <Link href={'/privacy-policy'}>policy of the Veeseats.</Link> </small>
 
 
 {isLoading ?        

@@ -2,11 +2,11 @@ import React from 'react'
 import Landingnav from './Landingnav'
 import { Instagram, Linkedin, Twitter } from 'lucide-react';
 import Link from 'next/link';
-const Landinglayout = ({children, hidelinks}) => {
+const Landinglayout = ({children, hidelinks, hidefooter}) => {
   return (
     <main className='mymain'>
    
-  <Landingnav hidelinks={hidelinks} />
+  <Landingnav hidelinks={hidelinks}  />
 
     {children}
 
@@ -36,52 +36,53 @@ const Landinglayout = ({children, hidelinks}) => {
 <div>
   <br />
   <br />
+  {!hidefooter && (
   <footer>
-    <div className="herocontainer">
-      <div className="logosecion">
-        <div className="mylogosec">
-        <Link href="/" className="mylogo">
-      <img src= '/logo1.png' alt=""  /> <div className='pbs'>Vee<span>Seats</span></div>  
-      </Link>
-        </div>
-        <div className="displaybody">
-          Flexible options, competitive rates, exceptional service – Empowering
-          your dreams. Apply now for a seamless borrowing experience and secure
-          a brighter future.
-        </div>
+  <div className="herocontainer">
+    <div className="logosecion">
+      <div className="mylogosec">
+      <Link href="/" className="mylogo">
+    <img src= '/logo1.png' alt=""  /> <div className='pbs'>Vee<span>Seats</span></div>  
+    </Link>
       </div>
-      <div className="linkssection">
-        <h3>About Us</h3>
-        <ul>
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Our Services</li>
-          <li>Contact Us</li>
-        </ul>
-      </div>
-      <div className="contactsection">
-        <h3>Contact us</h3>
-        <ul>
-          <li>
-            (903) 822-4082 16193 County Rd #3167 S Mount Enterprise, Texas(TX),
-            75681
-          </li>
-          <li>+908 89097 890</li>
-        </ul>
-      </div>
-      <div className="socialmedia">
-        <div className="social" >   <Twitter /> </div>
-        <div className="social" >      <Linkedin  /> </div>
-        <div className="social" >   <Instagram /> </div>
+      <div className="displaybody">
+      Veeseats emerged from a deep desire to revolutionize the recruitment landscape. What began as a simple concept has now evolved into a dynamic platform that simplifies the hiring process for both companies and job seekers.
       </div>
     </div>
-    <br />
-    <br />
-    <div className="lines" />
-    <div className="herocontainer ">
-      <p className="ctxt">Copyright ® 2021 Lorem All rights Rcerved</p>
+    <div className="linkssection">
+      <h3>About Us</h3>
+      <ul>
+        <li>Home</li>
+        <li>About Us</li>
+        <li>Our Services</li>
+        <li>Contact Us</li>
+      </ul>
     </div>
-  </footer>
+    <div className="contactsection">
+      <h3>Contact us</h3>
+      <ul>
+        <li>
+          (903) 822-4082 16193 County Rd #3167 S Mount Enterprise, Texas(TX),
+          75681
+        </li>
+        <li>+908 89097 890</li>
+      </ul>
+    </div>
+    <div className="socialmedia">
+      <div className="social" >   <Twitter /> </div>
+      <div className="social" >      <Linkedin  /> </div>
+      <div className="social" >   <Instagram /> </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <div className="lines" />
+  <div className="herocontainer ">
+    <p className="ctxt">Copyright ® 2024 Odah Victor Enyata Hackathon</p>
+  </div>
+</footer>
+  )}
+
 </div>
 
 

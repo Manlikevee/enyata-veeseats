@@ -3,7 +3,7 @@ import React from 'react'
 
 const Dashboardrolematch = ({job}) => {
   return (
-    <Link href={`/corporate/applications/job-applications/${job.ref}`} className='drolecard corp'>
+    <Link href={`/corporate/applications/job-applications/${job.ref}`} className='drolecard corp' >
    
    <div className="dtitle">
         <div className="rtitle">Job Application</div>

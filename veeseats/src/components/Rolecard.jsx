@@ -2,6 +2,11 @@
 import React, { useState } from 'react'
 import Link from 'next/link';
 import PlainTextRenderer from './PlainTextRenderer';
+import Tooltip from './utils/Tooltip';
+
+
+
+
 const Rolecard = ({job, footer, savejob, individualsdata }) => {
 
   const [isLoading, setIsLoading] = useState(false);
@@ -30,26 +35,33 @@ const Rolecard = ({job, footer, savejob, individualsdata }) => {
     <div  className="rolecard" >
     <div className="roleheader">
       <div className="rolelogo">
-        <img src={job.organization.logo} alt={job.organization.logo} />
+        <Tooltip>
+        <img src={job.organization.logo} alt='logo' />
+        </Tooltip>
+   
       </div>
       <div className="rolelocal fdc">
         <div className="gap">
           <img src="/lod.png" alt="" width="10px" height="13" />
           <small>Lagos</small>
         </div>
-        <div className="rtype">{job.jobservice}</div>
+        <div className="rtype">{job.jobservice || 'Tech'}</div>
       </div>
     </div>
     <div className="dtitle">
       <div className="job-card-title">{job.jobtitle}</div>
-      <div className="dservice">{job.jobcategory}</div>
+      <div className="dservice">{job.jobcategory || 'Tech'}</div>
     </div>
     <Link href={`/view-role/${job.ref}`} className="dcontent">
       
     {job.jobdescription && ( <PlainTextRenderer content={job.jobdescription} />)}
       {/* {job.jobdescription} */}
     </Link>
-
+    <div className="dfooter">
+        <div className="pill">{job?.jobcategory || 'Tech'}</div> 
+        
+          
+    </div>
     {
       !footer && (
         <>

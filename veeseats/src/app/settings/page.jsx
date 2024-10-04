@@ -1,14 +1,23 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from "@/components/dashboard/Layout";
 import Titleddiv from "@/components/Titleddiv";
 import Link from 'next/link';
 import { Toaster, toast } from 'sonner'
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 const page = () => {
+  const [email, setemail] = useState(null);
 
-  function testtoast(){
-    
-  }
+
+  useEffect(() => {
+    let accessToken = Cookies.get("access_token");
+    const decodedToken = jwtDecode(accessToken);
+    if ( accessToken && decodedToken.is_corporate   ) {
+      setemail(decodedToken.email)
+    }
+  }, [ ]);
+
   return (
     <Layout>
         <br />
@@ -37,17 +46,17 @@ const page = () => {
     </div>
     <div className="profileitem">
       <div className="proflabel">Start date</div>
-      <div className="profvalue">October 20, 2021</div>
+      <div className="profvalue">September 14, 2024</div>
     </div>
 
     <div className="profileitem">
       <div className="proflabel">Expiry date</div>
-      <div className="profvalue">October 20, 2021</div>
+      <div className="profvalue">October 14, 2021</div>
     </div>
 
     <div className="profileitem">
    
-      <div className="profvalue"><div className='mybbn' onClick={() => toast('My first toast')}>Upgrade plan</div></div>
+      <div className="profvalue"><div className='mybbn' onClick={() => toast('Coming Soon........')}>Upgrade plan</div></div>
     </div>
 
 
@@ -61,7 +70,7 @@ const page = () => {
 
 <Titleddiv title={"Email Address"}>
 
-Your email address is akinloluwaa@gmail.com
+Your email address is {email}
 
 </Titleddiv>
 

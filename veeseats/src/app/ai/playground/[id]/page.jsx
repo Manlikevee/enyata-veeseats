@@ -33,6 +33,7 @@ const page = () => {
 
 
 useEffect(() => {
+  console.log(id)
   if (id) {
     const fetchchats = async () => {
       try {
@@ -161,7 +162,7 @@ useEffect(() => {
     setError(null);
 
     try {
-      const response = await axios.get("https://bsjobapi.vercel.app/generate-quiz/1038097313/");
+      const response = await axios.get(`https://bsjobapi.vercel.app/generate-quiz/${id}/`);
        
       // Update fetchedData with the response from API
       setref_id(response.data.ref_id);
@@ -180,10 +181,10 @@ useEffect(() => {
 
 
 
-  // Fetch on component mount using useEffect
-  useEffect(() => {
+  // // Fetch on component mount using useEffect
+  // useEffect(() => {
 
-  }, []); // Empty dependency array ensures this runs only on mount
+  // }, []); // Empty dependency array ensures this runs only on mount
 
 
   const tabs = [
@@ -238,21 +239,19 @@ All Chats
 
 {activeTab === 1 && (
   <>
-  {
-    fetchedData && !loading ? (
-      <>
-
-<Quiz  htmlQuestions={fetchedData}  goback={setActiveTab} />
-      </>
+{
+  fetchedData && fetchedData.length > 0 && !loading ? (
+    <>
 
 
-    ) : (
-      <div className="fullycentered">
-
-   <Loader/>
-      </div>
-   
-    )}
+      <Quiz htmlQuestions={fetchedData} goback={setActiveTab} />
+    </>
+  ) : (
+    <div className="fullycentered">
+      <Loader />
+    </div>
+  )
+}
    
   </>
 
@@ -277,17 +276,13 @@ diamond
 <div className="qact" onClick={fetchQuizQuestions}><div className="qicon"></div>I want To Prepare for an interview  <span className="material-symbols-outlined">
 chevron_right
 </span> </div>
-<div className="qact" onClick={setid}><div className="qicon"></div>I want To Take A Quick Pop Quiz
+<div className="qact" ><div className="qicon"></div>I want To Take A Quick Pop Quiz (coming soon)
 <span className="material-symbols-outlined">
 chevron_right
 </span>
 </div>
-<div className="qact" onClick={() => setActiveTab(1)}><div className="qicon"></div>I want To Rate My Chances At A Job Proposal
-<span className="material-symbols-outlined">
-chevron_right
-</span>
-</div>
-<div className="qact" onClick={testfunction}><div className="qicon"></div>I want To Review My Project Idea
+
+<div className="qact" onClick={testfunction}><div className="qicon"></div>Quiz History
 <span className="material-symbols-outlined">
 chevron_right
 </span>

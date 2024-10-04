@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>VEESEATS Email Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style media="all" type="text/css">
+      /* -------------------------------------
+    GLOBAL RESETS
+------------------------------------- */
+
+      body, * {
+        font-family: "Poppins", sans-serif !important;
+        -webkit-font-smoothing: antialiased;
+        font-size: 16px;
+        line-height: 1.3;
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      table {
+        border-collapse: separate;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        width: 100%;
+      }
+
+      table td {
+        font-family: "Poppins", sans-serif !important;
+        font-size: 16px;
+        vertical-align: top;
+      }
+      /* -------------------------------------
+    BODY & CONTAINER
+------------------------------------- */
+
+      body {
+        background-color: #f4f5f6;
+        margin: 0;
+        padding: 0;
+      }
+
+      .body {
+        background-color: #f4f5f6;
+        width: 100%;
+      }
+
+      .container {
+        margin: 0 auto !important;
+        max-width: 600px;
+        padding: 0;
+        padding-top: 24px;
+        width: 600px;
+      }
+
+      .content {
+        box-sizing: border-box;
+        display: block;
+        margin: 0 auto;
+        max-width: 600px;
+        padding: 0;
+      }
+      /* -------------------------------------
+    HEADER, FOOTER, MAIN
+------------------------------------- */
+
+      .main {
+        background: #ffffff;
+        border: 1px solid #eaebed;
+        border-radius: 16px;
+        width: 100%;
+      }
+
+      .wrapper {
+        box-sizing: border-box;
+        padding: 24px;
+      }
+
+      .footer {
+        clear: both;
+        padding-top: 24px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .footer td,
+      .footer p,
+      .footer span,
+      .footer a {
+        color: #9a9ea6;
+        font-size: 16px;
+        text-align: center;
+      }
+      /* -------------------------------------
+    TYPOGRAPHY
+------------------------------------- */
+
+      p {
+        font-family: "Poppins", sans-serif !important;
+        font-size: 16px;
+        font-weight: normal;
+        margin: 0;
+        margin-bottom: 16px;
+        font-size: 14.5px;
+    line-height: 1.7em;
+
+      }
+
+      a {
+        color: #0867ec;
+        text-decoration: underline;
+      }
+      /* -------------------------------------
+    BUTTONS
+------------------------------------- */
+
+      .btn {
+        box-sizing: border-box;
+        min-width: 100% !important;
+        width: 100%;
+      }
+
+      .btn > tbody > tr > td {
+        padding-bottom: 16px;
+      }
+
+      .btn table {
+        width: auto;
+      }
+
+      .btn table td {
+        background-color: #ffffff;
+        border-radius: 4px;
+        text-align: center;
+      }
+
+      .btn a {
+        background-color: #ffffff;
+        border: solid 2px #0867ec;
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: #0867ec;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0;
+        padding: 12px 24px;
+        text-decoration: none;
+        text-transform: capitalize;
+      }
+
+      .btn-primary table td {
+        background-color: #a92f41;
+      }
+
+      .btnwhite  table td {
+        background-color: #fff;
+      }
+
+      .btn-primary a {
+        background-color: #a92f41;
+        border-color: #a92f41;
+        color: #ffffff;
+      }
+      .btnwhite a {
+        background-color: #fff;
+        border-color: #a92f41;
+        color: #a92f41;
+      }
+      @media all {
+        .btn-primary table td:hover {
+          background-color: #a92f41 !important;
+        }
+        .btn-primary a:hover {
+          background-color: #a92f41 !important;
+          border-color: #a92f41 !important;
+        }
+      }
+
+      /* -------------------------------------
+    OTHER STYLES THAT MIGHT BE USEFUL
+------------------------------------- */
+
+      .last {
+        margin-bottom: 0;
+      }
+
+      .first {
+        margin-top: 0;
+      }
+
+      .align-center {
+        text-align: center;
+      }
+
+      .align-right {
+        text-align: right;
+      }
+
+      .align-left {
+        text-align: left;
+      }
+
+      .text-link {
+        color: #0867ec !important;
+        text-decoration: underline !important;
+      }
+
+      .clear {
+        clear: both;
+      }
+
+      .mt0 {
+        margin-top: 0;
+      }
+
+      .mb0 {
+        margin-bottom: 0;
+      }
+
+      .preheader {
+        color: transparent;
+        display: none;
+        height: 0;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        mso-hide: all;
+        visibility: hidden;
+        width: 0;
+      }
+
+      .powered-by a {
+        text-decoration: none;
+      }
+
+      /* -------------------------------------
+    RESPONSIVE AND MOBILE FRIENDLY STYLES
+------------------------------------- */
+
+      @media only screen and (max-width: 640px) {
+        .main p,
+        .main td,
+        .main span {
+          font-size: 16px !important;
+        }
+        .wrapper {
+          padding: 8px !important;
+        }
+        .content {
+          padding: 0 !important;
+        }
+        .container {
+          padding: 0 !important;
+          padding-top: 8px !important;
+          width: 100% !important;
+        }
+        .main {
+          border-left-width: 0 !important;
+          border-radius: 0 !important;
+          border-right-width: 0 !important;
+        }
+        .btn table {
+          max-width: 100% !important;
+          width: 100% !important;
+        }
+        .btn a {
+          font-size: 16px !important;
+          max-width: 100% !important;
+          width: 100% !important;
+        }
+      }
+      /* -------------------------------------
+    PRESERVE THESE STYLES IN THE HEAD
+------------------------------------- */
+
+      @media all {
+        .ExternalClass {
+          width: 100%;
+        }
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+          line-height: 100%;
+        }
+        .apple-link a {
+          color: inherit !important;
+          font-family: inherit !important;
+          font-size: inherit !important;
+          font-weight: inherit !important;
+          line-height: inherit !important;
+          text-decoration: none !important;
+        }
+        #MessageViewBody a {
+          color: inherit;
+          text-decoration: none;
+          font-size: inherit;
+          font-family: inherit;
+          font-weight: inherit;
+          line-height: inherit;
+        }
+      }
+
+      .bg-image {
+            background-image: url('https://boardseats.io/documents/20121/0/bseats.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 100%;
+            height: 300px;
+            border: 0;
+            padding-block: 20px;
+            outline: none;
+            text-decoration: none;
+            display: flex;
+            place-items: center;
+            align-items: center;
+            margin: auto;
+        }
+
+        .roleitem{
+          width: 100%;
+          display: flex;
+        }
+    </style>
+  </head>
+  <body>
+    <table
+      role="presentation"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      class="body"
+    >
+      <tr>
+        <td>&nbsp;</td>
+        <td class="container">
+          <div class="content">
+            <!-- START CENTERED WHITE CONTAINER -->
+            <span class="preheader"
+              >  Roles that Match Your Profile</span
+            >
+            <table
+              role="presentation"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              class="main"
+            >
+              <!-- START MAIN CONTENT AREA -->
+              <tr>
+                <td class="wrapper">
+
+                  <img alt="" src="https://veeseats.vercel.app/logo1.png"
+
+                  alt="Boardseats Company Logo" width="180" height="30" border="0" style="border:0; outline:none; text-decoration:none; display:block; place-items: center; align-items: center; margin: auto; display: flex; width: fit-content;
+    height: 26px;
+    object-fit: contain;"
+                  />
+
+                  <br>
+
+                  <div class="bg-image">
+                    <br>
+                    <div class="summarytext" style="background-color: #a91f2fd6; padding: 30px; width: 70%; margin-left: 20px; max-height: 100px; margin-top: 40px; margin-bottom: 40px;">
+<h1 style="color: white; font-size: 30px;">Role Referral</h1>
+
+                    </div>
+                 </div>
+    <br>
+<p>
+  Hello {{users_name}},
+  <br>
+
+  <p>
+    I hope this message finds you well. I’m reaching out to share a role that has been referred to you by {{Referral_name}} because they believe your expertise and background make you an ideal candidate for this opportunity.
+
+  </p>
+
+                  <p>
+                    - {{role.jobtitle}} at {{role.organization.organization_name}}
+                  </p>
+
+
+                   <p>
+                    If this opportunity piques your interest, I encourage you to take the next step by exploring more about the role and submitting your application.
+                   </p>
+
+
+
+</p>
+
+
+
+
+                  <table
+                    role="presentation"
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    class="btn btn-primary"
+                  >
+                    <tbody>
+                      <tr>
+                        <td align="left">
+                          <table
+                            role="presentation"
+                            border="0"
+                            cellpadding="0"
+                            cellspacing="0"
+                          >
+                            <tbody>
+                              <tr>
+                                <td >
+
+                                  <a href="https://veeseats.vercel.app/view-role/{{role.ref}}" target="_blank"
+                                   style="padding: 10px;     line-height: 16px;"  >View Role</a
+                                  >
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+
+                    <p style="padding: 10px; text-align: center;  background: #F5F5F5" >
+                      For more enquiry, please contact us at: <a href="mailto:odahviktor@gmail.com" style="color:#a92f41">enquiries@veeseats.com</a>
+                    </p>
+
+                    <div class="footer" style=" width: 100%; min-height: 20px; background-color: #a92f41; ">
+<div style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; ">
+                 <img alt="" src="https://veeseats.vercel.app/logo1.png"
+
+                  alt="veeseats Company Logo" width="180" height="30" border="0" style="border:0; outline:none; text-decoration:none; display:block; place-items: center; align-items: center; margin: auto; display: flex; width: fit-content;
+    height: 26px;
+    object-fit: contain;"
+                  />
+</div>
+
+<br>
+<div style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; ">
+  <div></div>
+  <div class="footerlinks" style="margin-left: 70px; display: flex; width: 100%; align-items: center; justify-content: center;">
+
+
+
+
+    </div>
+    <div></div>
+</div>
+
+<br>
+<br>
+
+                    </div>
+
+
+
+                </td>
+              </tr>
+
+              <!-- END MAIN CONTENT AREA -->
+            </table>
+
+            <!-- START FOOTER -->
+            <div class="footer">
+              <table
+                role="presentation"
+                border="0"
+                cellpadding="0"
+                cellspacing="0"
+              >
+
+              </table>
+            </div>
+
+            <!-- END FOOTER -->
+
+            <!-- END CENTERED WHITE CONTAINER -->
+          </div>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+  </body>
+</html>

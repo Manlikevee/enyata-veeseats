@@ -5,10 +5,10 @@ import React from 'react'
 
 const page = () => {
   return (
-    <Landinglayout hidelinks >
+    <Landinglayout hidelinks  hidefooter>
 <div className="startimageblock telephone shorters"></div>
 <div className="herocontainer fdc serv bgap">
-{/* <Userprofile/> */}
+
 <Templateone/>
 </div>
         </Landinglayout>

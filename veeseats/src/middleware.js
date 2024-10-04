@@ -33,12 +33,14 @@ export default async function middleware(req) {
   }
 
   // 6. Redirect to /dashboard if the user is authenticated
-  if (
-    isPublicRoute &&
-    session?.user_id &&
-    !req.nextUrl.pathname.startsWith('/Individual/dashboard')
-  ) {
-    return NextResponse.redirect(new URL('/Individual/dashboard', req.nextUrl))
+  // 6. Redirect to the appropriate dashboard based on user type
+  if (isPublicRoute && session?.user_id) {
+    // Check if user is corporate and redirect accordingly
+    if (session.is_corporate) {
+      return NextResponse.redirect(new URL('/corporate/dashboard', req.nextUrl))
+    } else {
+      return NextResponse.redirect(new URL('/Individual/dashboard', req.nextUrl))
+    }
   }
 
   return NextResponse.next()

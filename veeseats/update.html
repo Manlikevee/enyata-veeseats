@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UV Umbrella</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+      html {
+        scroll-behavior: smooth;
+        /* Enables smooth scrolling */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Body and font styles */
+      body {
+        font-family: "Poppins", sans-serif;
+        color: #000;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        position: fixed;
+        min-height: 68px;
+        padding: 9px;
+        background-color: rgba(255, 255, 255, 0.969);
+        /* Slightly transparent for blending */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 99999;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-text {
+        font-size: 1.3rem;
+        font-weight: bold;
+
+        color: #333;
+      }
+
+      .logo img {
+        height: 40px;
+        object-fit: contain;
+        margin-right: 10px;
+      }
+
+      .photo {
+        width: 40%;
+        /* Adjust size */
+        max-width: 1000px;
+        /* Adjust maximum width as needed */
+        height: auto;
+        margin-left: auto;
+        /* Pushes the image to the right */
+      }
+
+      .responsive {
+        max-width: 100%;
+        /* Prevent image from overflowing */
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 25px;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 15px;
+        font-weight: normal;
+        text-transform: uppercase;
+        transition: color 0.3s, transform 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: darkblue;
+        transform: scale(1.1);
+        /* Slightly increase size on hover */
+      }
+
+      /* Order Now Button */
+      .order-btn {
+        background-color: #007bff;
+        /* Deeper blue */
+        color: #fff;
+        padding: 12px;
+        text-transform: uppercase;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .order-btn:hover {
+        background-color: #a0b6ce;
+        transform: scale(1.05);
+      }
+
+      .shop-btn {
+        background-color: #007bff;
+        color: #fff;
+        margin-block: 10px;
+        padding: 1rem 2rem;
+        text-transform: uppercase;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        border: none;
+        cursor: pointer;
+        justify-content: center;
+      }
+
+      .shop-btn:hover {
+        background-color: #a0b6ce;
+        transform: scale(1.05);
+      }
+
+      /* Hero Section */
+
+      .hero-section {
+        display: flex;
+        align-items: center;
+        padding: 2rem;
+        text-align: justify;
+        height: 100vh;
+        color: black;
+        background: linear-gradient(to right, #a7c5eb, #f9f9f9);
+        /* Softer gradient */
+      }
+
+      .container {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: center;
+      }
+
+      .text-content {
+        max-width: 50%;
+        padding: 20px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+        margin-bottom: 1rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2vw;
+        margin-bottom: 1.5rem;
+      }
+
+      .features-section {
+        padding: 2rem;
+        background-color: #ffffff;
+        /* White background for contrast */
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: #333;
+      }
+
+      .product-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 0.5 rem;
+        color: #333;
+        background: linear-gradient(to right, #a7c5eb, #f9f9f9);
+        /* Softer gradient */
+      }
+
+      .features {
+        display: flex;
+        justify-content: space-around;
+        gap: 2rem;
+        padding: 1rem;
+      }
+      a {
+        text-decoration: none;
+      }
+      .feature {
+        max-width: 22%;
+        text-align: center;
+        margin: 1rem 0;
+        transition: transform 0.3s;
+        cursor: pointer;
+      }
+
+      .feature:hover {
+        transform: scale(1.05);
+      }
+
+      .feature-image {
+        width: 50%;
+        height: 140px;
+        border-radius: 10px;
+        object-fit: contain;
+      }
+
+      .image {
+        width: 30%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+        margin: 0.5rem 0;
+        color: #333;
+      }
+
+      .feature p {
+        font-size: 0.87rem;
+        color: #555;
+        padding: 0 0.5rem;
+        line-height: 1.5;
+      }
+
+      .umbrella-showcase {
+        text-align: center;
+        padding: 50px 20px;
+        background: linear-gradient(to right, #a7c5eb, #f9f9f9);
+      }
+
+      h1 {
+        font-size: 1em;
+        color: #333;
+      }
+
+      h4 {
+        font-size: 0.4em;
+        color: #555;
+        margin-bottom: 30px;
+        font-weight: 500;
+      }
+
+      .product-grid {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: 50px;
+        width: 100%;
+        padding-block: 10px;
+        margin-block: 10px;
+      }
+      .product {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 23%;
+        /* margin-bottom: 0px; */
+        text-align: center;
+        padding: 10px;
+      }
+
+      .product img {
+        width: 100%;
+        border-radius: 10px;
+        height: 200px;
+        object-fit: contain;
+      }
+
+      .product h3 {
+        font-size: 1.0rem;
+        margin: 2px 0;
+      }
+
+      .product p {
+        color: #333;
+        margin: 2px 0;
+      }
+
+      .price {
+        font-size: 1.1rem;
+        color: #27ae60;
+      }
+
+      .rating {
+        color: #f39c12;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1024px) {
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+
+        /* .features {
+                flex-direction: column;
+                gap: 1rem;
+            } */
+        .hero-section {
+          height: fit-content;
+          min-height: 100vh;
+        }
+        .features {
+          display: flex;
+          justify-content: space-around;
+          gap: 10px;
+          padding: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .feature {
+          max-width: 40%;
+          text-align: center;
+          margin: 1rem 0;
+          transition: transform 0.3s;
+        }
+        h4 {
+          padding-block: 10px;
+          margin-bottom: 0px;
+        }
+        .product {
+          width: 45%;
+          margin: 9px;
+        }
+
+        .container {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+        }
+        .photo {
+          width: 100%;
+        }
+        .text-content {
+          max-width: 100%;
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          flex-direction: column;
+        }
+        .responsive {
+          max-width: 50%;
+          height: auto;
+          display: block;
+          margin: 0 auto;
+          border-radius: 25px;
+        }
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+
+        .hero-title {
+          font-size: 1.75rem;
+        }
+
+        .features {
+          flex-direction: column;
+        }
+
+        .feature {
+          max-width: 100%;
+        }
+
+        .product {
+          width: 100%;
+          margin: 0;
+          margin-top: 10px;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .nav-links {
+          flex-direction: column;
+          align-items: center;
+        }
+        .hero-section {
+          display: flex;
+          align-items: center;
+          padding: 14px;
+        }
+        .hero-title {
+          font-size: 1.5rem;
+        }
+
+        .hero-subtitle {
+          font-size: 0.9rem;
+        }
+
+        .product {
+          width: 100%;
+        }
+
+        .shop-btn {
+          background-color: #007bff;
+          color: #fff;
+          padding: 1rem 2rem;
+          text-transform: uppercase;
+          border-radius: 50px;
+          font-weight: bold;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+          border: none;
+          cursor: pointer;
+          justify-content: center;
+          margin: auto;
+          min-width: 300px;
+          text-align: center;
+          border-radius: 4px;
+          margin-top: 22px;
+        }
+
+        .nav-links li {
+          display: none;
+        }
+
+        .nav-links li:last-child {
+          display: flex;
+        }
+        h1 {
+          font-size: 23px;
+          color: #333;
+          padding-top: 10px;
+        }
+
+        .container {
+          width: 100%;
+        }
+        .hero-section {
+          height: fit-content;
+          min-height: 75vh;
+        }
+
+        .responsive {
+          max-width: 80%;
+          height: auto;
+          display: block;
+          margin: 0 auto;
+          border-radius: 25px;
+        }
+        .feature-image {
+          width: 50%;
+          height: fit-content;
+          border-radius: 10px;
+          object-fit: contain;
+        }
+
+        .features {
+          display: flex;
+          justify-content: space-around;
+          gap: 10px;
+          padding: 0rem;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <img
+          src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/144/382/original/favicon.png?1726839878"
+          class="responsive"
+          alt="UV Umbrella Logo"
+        />
+        <span class="logo-text">SunGuard Shields</span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#product">Products</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li>
+          <a
+            href="https://www.amazon.de/-/en/UV-Blocker-Protection-Compact-Umbrella/dp/B0076OX4GK"
+            target="_blank"
+            class="order-btn"
+            >Shop Now</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <br />
+
+    <br />
+    <header class="hero-section" id="home">
+      <div class="container">
+        <div class="text-content">
+          <h1 class="hero-title">Beat the Heat with Our Premium UV Umbrella</h1>
+          <p class="hero-subtitle">
+            Enjoy stylish sun protection with our UV umbrella, expertly designed
+            to block harmful rays while keeping you cool and comfortable.
+          </p>
+          <a
+            href="https://www.amazon.de/-/en/UV-Blocker-Protection-Compact-Umbrella/dp/B0076OX4GK"
+            target="_blank"
+            class="order-btn"
+            >Shop Now</a
+          >
+        </div>
+        <div class="photo">
+          <img
+            src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/144/320/original/81wVyFG8FSL.jpg?1726795303"
+            class="responsive"
+            alt="UV Umbrella"
+          />
+        </div>
+      </div>
+    </header>
+    <section id="features" class="features-section">
+      <div class="section-title">
+        <h1>Experience Unmatched Sun Protection</h1>
+        <h4>
+          Discover the ultimate outdoor experience with our UV Shield
+          Umbrella—your go-to companion for any weather!
+        </h4>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <img
+            src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/144/324/original/images_%281%29.jpeg?1726799323"
+            alt="UV Protection"
+            class="feature-image"
+          />
+          <h3>Ultimate UV Protection</h3>
+          <p>
+            Experience unparalleled safety under the sun! Our UV Umbrella blocks
+            up to 99% of harmful UV rays, ensuring your skin stays protected
+            while you enjoy the outdoors. Don't compromise on safety—choose the
+            umbrella that puts your health first!.
+          </p>
+        </div>
+
+        <div class="feature">
+          <img
+            src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/144/323/original/images_%281%29.png?1726799169"
+            alt="Wind Resistant"
+            class="feature-image"
+          />
+          <h3>Wind Resistant Design</h3>
+          <p>
+            Say goodbye to flimsy umbrellas! Crafted to withstand strong winds,
+            our UV Umbrella offers unmatched durability and stability. Enjoy
+            peace of mind on breezy days knowing your umbrella is built to last.
+          </p>
+        </div>
+
+        <div class="feature">
+          <img
+            src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/144/327/original/images_%282%29.jpeg?1726800109"
+            alt="Compact & Portable"
+            class="feature-image"
+          />
+          <h3>Compact & Portable</h3>
+          <p>
+            Life is an adventure, and our UV Umbrella is designed to keep up!
+            Its lightweight and compact design make it the perfect companion for
+            travel, beach trips, and everyday outings. Effortlessly toss it in
+            your bag and be ready for anything!.
+          </p>
+        </div>
+
+        <div class="feature">
+          <img
+            src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/144/328/original/360_F_594668304_RKUUToJxcN9KDRmwkgmc0VkZvQjRXBJY.jpg?1726800460"
+            alt="Durability"
+            class="feature-image"
+          />
+          <h3>Unmatched Durability</h3>
+          <p>
+            Crafted from premium materials, our UV Umbrella guarantees
+            long-lasting performance and reliable protection. Invest in quality
+            you can trust—this umbrella is built to withstand the elements and
+            keep you safe for years to come!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="product-title">
+      <h1>Find Your Perfect UV Umbrella</h1>
+      <h4>
+        Select from our range of premium UV Shield umbrellas designed to protect
+        you from harmful sun rays and rain!
+      </h4>
+    </div>
+
+    <section id="product" class="hero-section">
+      <div class="product-grid">
+        <article class="product">
+          <img
+            src="https://m.media-amazon.com/images/I/71PK+n5llGL._AC_SX679_.jpg"
+            alt="UV Protection Umbrella with UV Blocker"
+          />
+          <h3>UV Protection Umbrella</h3>
+          <p class="price">€73.76</p>
+          <p class="rating">★★★★☆ (721 reviews)</p>
+        </article>
+        <article class="product">
+          <img
+            src="https://m.media-amazon.com/images/I/7135-HsrGJS._AC_UL320_.jpg"
+            alt="Windproof UV Umbrella with sturdy design"
+          />
+          <h3>Windproof UV Umbrella</h3>
+          <p class="price">€29.97</p>
+          <p class="rating">★★★★★ (5,755 reviews)</p>
+        </article>
+        <article class="product">
+          <img
+            src="https://m.media-amazon.com/images/I/51J9T0CdLDL._AC_SX522_.jpg"
+            alt="Compact UV Umbrella for easy portability"
+          />
+          <h3>Compact UV Umbrella</h3>
+          <p class="price">€15.58</p>
+          <p class="rating">★★★★☆ (300 reviews)</p>
+        </article>
+        
+        <article class="product">
+          <img
+            src="https://m.media-amazon.com/images/I/912ABv-qTcL._AC_SX679_.jpg"
+            alt="Travel UV Umbrella for outdoor use"
+          />
+          <h3>Travel UV Umbrella</h3>
+          <p class="price">€24.99</p>
+          <p class="rating">★★★★☆ (52 reviews)</p>
+        </article>
+
+        <a
+          href="https://www.amazon.de/-/en/UV-Blocker-Protection-Compact-Umbrella/dp/B0076OX4GK"
+          target="_blank"
+          class="shop-btn"
+          >Shop Now</a
+        >
+      </div>
+    </section>
+  </body>
+</html>

@@ -7,6 +7,7 @@ import Landingpagecard from '@/components/Landingpagecard'
 import Linebgdiv from '@/components/Linebgdiv'
 import Offercard from '@/components/Offercard'
 import Swipeteams from '@/components/Swipeteams'
+import Cookieconcent from '@/components/utils/Cookieconcent'
 import Quickservice from '@/components/utils/Quickservice'
 import React from 'react'
 
@@ -112,7 +113,7 @@ Grow your startup with our Service
 </div>
 
 <div className="growsub">
-Build an incredible workplace and grow your business with Gusto’s all-in-one platform with amazing contents.
+Build an incredible workplace and grow your business with Veeseats all-in-one platform with amazing contents.
 </div>
 <br />
 <br />
@@ -272,6 +273,7 @@ Build with love & Trust
     <Swipeteams/>
     </div>
 </div>
+{/* <Cookieconcent/> */}
     </Landinglayout>
 
   )

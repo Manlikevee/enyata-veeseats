@@ -9,8 +9,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Messagecard from '@/components/Messagecard';
 import Dashboardrolematch from '@/components/Dashboardrolematch';
+import Lazytext from '@/components/Lazyloading/Lazytext';
+import Roleloader from '@/components/utils/Roleloader';
+import Notfoundcomponent from '@/components/utils/Notfoundcomponent';
 const page = () => {
-  const { jobupdate , Loadingjobupdate} = useContext(VeeContext);
+  const { jobupdate , Loadingjobupdate, userprofile, published,filled, openroles} = useContext(VeeContext);
   
   return (
     <Layout>
@@ -19,7 +22,7 @@ const page = () => {
         <br />
         <div className="sectiontitle col">
           <div>
-            Welcome back, Victor Odah 
+          Welcome back, {userprofile?.user?.first_name + '' + userprofile?.user?.last_name}
           </div>
           <small>Here is what we have for you today</small>
         </div>
@@ -59,7 +62,10 @@ loop={false}
                 <span className="material-symbols-outlined yellow"> stacks </span> 
                 </div>
                 <div className="dashtext">
-<div className="num">24</div>
+<div className="num">
+
+{jobupdate && !Loadingjobupdate ? (published) : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
+</div>
 <div className="label">Open Roles</div>
                 </div>
               </div>
@@ -72,7 +78,9 @@ loop={false}
                 </div>
 
                 <div className="dashtext">
-<div className="num">14</div>
+<div className="num">
+{jobupdate && !Loadingjobupdate ? (filled) : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
+</div>
 <div className="label">Unpublished Roles</div>
                 </div>
               </div>
@@ -87,7 +95,9 @@ loop={false}
                 <span className="material-symbols-outlined blue">conversion_path </span> 
                 </div>
                 <div className="dashtext">
-<div className="num">94</div>
+<div className="num">
+{jobupdate && !Loadingjobupdate ? (published) : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
+</div>
 <div className="label">Filled Roles</div>
                 </div>
               </div>
@@ -100,6 +110,24 @@ loop={false}
             <br />
             <div className="dashroles">
 
+
+
+            {
+Loadingjobupdate && (
+<>
+<Roleloader/>
+
+<Roleloader/>
+
+<Roleloader/>
+</>
+  )
+}
+
+{jobupdate?.length <= 0 && !Loadingjobupdate &&  (
+<Notfoundcomponent/>
+)}
+
             {jobupdate?.length > 0 && (
               <>
               {jobupdate.map((job, index) => (
@@ -109,6 +137,8 @@ loop={false}
 
 
             )}
+
+            
             {/* <Dashboardrolematch/>
             <Dashboardrolematch/>
   <Dashboardrolematch/>
@@ -123,10 +153,8 @@ loop={false}
       <div className="messageflextitle">Messages</div>
       <p></p>
       <div className="messagesflx">
-      <Messagecard/>
-      <Messagecard/>
-      <Messagecard/>
-      <Messagecard/>
+      <Messagecard title={'Veeseats'} body={'Getting Started With Veeseats'} mylink='/inbox'  />
+      <Messagecard title={'Veeseats Ai'} body={'Hello There Testing 1..2...3'} />
       {/* <Messagecard/>
       <Messagecard/> */}
 

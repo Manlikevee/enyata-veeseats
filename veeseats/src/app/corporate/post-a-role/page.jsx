@@ -12,6 +12,7 @@ import { marked } from 'marked';
 import lgaData from '@/components/dashboard/lgaData.json';
 import { VeeContext } from '@/components/context/Chatcontext';
 import { Wand } from 'lucide-react';
+import { useRouter } from 'next/navigation'
 const DynamicQuillEditor = dynamic(() => import('@/components/QuillEditor'), {
   ssr: false,
 });
@@ -19,7 +20,7 @@ const DynamicQuillEditor = dynamic(() => import('@/components/QuillEditor'), {
 
 const page = () => {
   const { individualsdata , axiosInstance, optimizeBusinessDescription} = useContext(VeeContext);
-
+  const router = useRouter()
 
   const [skillAreas, setSkillAreas] = useState([
     { value: 'frontend', label: 'Frontend Development' },
@@ -197,10 +198,11 @@ const page = () => {
       console.log("Payload:", payload);
     
       // Make the POST request using Axios
-      axiosInstance.post('https://bsjobapi.vercel.app/createjobpost/', payload)
+      axiosInstance.post('/createjobpost/', payload)
         .then(response => {
           console.log('Response:', response.data);
           toast.success('Job Posted Successfully')
+          router.push('/corporate/dashboard')
           // Handle success (e.g., display a success message or navigate to another page)
         })
         .catch(error => {
@@ -238,10 +240,11 @@ const page = () => {
       console.log("Payload:", payload);
     
       // Make the POST request using Axios
-      axiosInstance.post('https://bsjobapi.vercel.app/createjobpost/', payload)
+      axiosInstance.post('/createjobpost/', payload)
         .then(response => {
           console.log('Response:', response.data);
           toast.success('Job Posted Successfully')
+          router.push('/corporate/dashboard')
           // Handle success (e.g., display a success message or navigate to another page)
         })
         .catch(error => {

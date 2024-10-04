@@ -105,7 +105,7 @@ const Quiz = ({ htmlQuestions, goback }) => {
             </div>
 
             {/* Display current question */}
-            <div className="valuetitle">{htmlQuestions[currentQuestion].topic}</div>
+            <div className="valuetitle">{htmlQuestions[currentQuestion]?.topic}</div>
             <p>{htmlQuestions[currentQuestion].question}</p>
 
             {/* Chevron buttons to navigate questions */}

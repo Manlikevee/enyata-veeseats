@@ -477,7 +477,7 @@ Companies and Candidates
 
     <div className="recruitmentprocesstext">
       
-    BoardSeats provides a digitised platform, built to enable the requisite connections for a flexible, reliable and optimised Board recruitment process. 
+    Veeseats provides a digitised platform, built to enable the requisite connections for a flexible, reliable and optimised Board recruitment process. 
             
     </div>
     <br />
@@ -504,12 +504,18 @@ Companies and Candidates
 <Landingpagecard 
   title="Stand Out in Your Career; Elevate Your Career with Veeseats" 
   subtitle="Veeseats connects ambitious professionals with exclusive board opportunities. Elevate your career and find the perfect role that matches your expertise. Stand out, connect, and secure your next leadership role with Veeseats." 
-  image="/standout.jpg" 
+  image="https://developers.google.com/static/analytics/images/landing-page/Rectangular-16x9/E02877824-GMP-Google-Analytics-Help-Center-Assets-Apr23-Graphic-3.1@300x.svg" 
   cta="Find Board Roles" 
   listitems
   reverse/>
 
+<Landingpagecard 
+  title="Stay up to date with what is important" 
+  subtitle="Veeseats is built for recruitment professionals but simple enough for anyone to manage. It combines essential recruitment features with skills-first candidate assessments, creating a data-driven and best-practice hiring process that candidates appreciate" 
+  image="https://cdn.prod.website-files.com/5e1c76c46a00732f7ff2b1c5/659bf7e71c3d7de072235af1_A-grade%20talent.svg" 
+  cta="Find Board Roles" 
 
+  />
 
 
   </div>

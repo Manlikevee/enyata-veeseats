@@ -830,12 +830,12 @@ add
     <div className="demacated">
 
     <p className='story'>
-    <PayButton
+    {/* <PayButton
         amount={2000}           // The amount to be paid (in Naira, convert to Kobo in the component)
         publicKey={publicKey} // Replace with your actual Paystack public key
         setReference={setReference}      // Function to store reference after successful payment
         handlePrint={handlePrint}        // Custom function to handle reference after success
-      />
+      /> */}
 
   We’re excited to inform you that upon completing your profile update, your account will be upgraded with a <strong>Free 1-Month Trial Subscription</strong>! Enjoy the premium features and explore all that our platform has to offer at no cost for the next month.
 

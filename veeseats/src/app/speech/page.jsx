@@ -1,4 +1,5 @@
 import FindARole from '@/components/Mypages/FindARole';
+import MessageComponent from '@/components/utils/MessageComponent';
 import SpeechToText from '@/components/utils/SpeechToText';
 import React from 'react';
 
@@ -16,7 +17,9 @@ const page = () => {
 
 
   return (
-<SpeechToText/>
+
+
+<MessageComponent/>
   )
 }
 

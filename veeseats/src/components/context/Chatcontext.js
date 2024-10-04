@@ -11,14 +11,16 @@ export const VeeContext = createContext();
 
 
 
-
+// myevents,loadingevents
 
 export const VeeContextProvider = ({ children }) => {
   const [loaderVisible, setLoaderVisible] = useState(true);
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(1);
   const [hideLoader, setHideLoader] = useState(false);
     const router = useRouter();
     const [test, setTest] = useState('');
+    const [myevents, setMyevents] = useState([]); 
+  const [loadingevents, setLoadingevents] = useState(true); 
     const [joberror, setJoberror] = useState(false);
     const [allJobs, setAllJobs] = useState([]);
     const [allSavedJobs, setAllSavedJobs] = useState([]);
@@ -39,14 +41,41 @@ export const VeeContextProvider = ({ children }) => {
     const [roleMatch, setRoleMatch] = useState([]);
     const [roleMatchLoading, setRoleMatchLoading] = useState(false);
     const [roleMatchError, setRoleMatchError] = useState(null);
-    
+    const [openroles, setopenroles] = useState(null);
+    const [published, setpublished]  = useState(null);
+    const [filled, setfilled]  = useState(null);
     const [profileloaded, setprofileloaded] = useState(false);
-
     const [blogs, setBlogs] = useState([]); // Blog posts state
     const [loading, setLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
-
+    const [activechat, setActivechat] = useState('');
+    const [allprofiles, setAllprofile] = useState([]);
+    const [activeprofile, setActiveprofile] = useState([]);
+    const [gottendata, setgottendata] = useState([])
+    const [chatdata, setChatdata] = useState([]);
+    const [activeuserid, setactiveuserid] = useState('');
+    const [conversationdata, setconversationdata] = useState([]);
+    const [allChat, setAllchat] = useState([]);
+    const [activechatdata, setActivechatdata] = useState([]);
+    const [training, setTraining] = useState([]);
+    const [loadingtraining, setloadingTraining] = useState(false);
+    const [sideloading, setsideloading] = useState(true)
+    const [visitationdata, setVisitationdata] = useState([]);
+    const [loadingaccept, setloadingaccept] = useState(false)
+    const [isvisitorbaropen, setisVistorbaropen] = useState(false);
+    const [visitors, setVisitors] = useState([]);
+    const [myqrcode, setQrcode] = useState([]);
+    const [awaiting, setAwaiting] = useState([]);
+    const [pendingApproval, setPendingApproval] = useState([]);
+    const [reshedule, setReshedule] = useState([]);
+    const [inProgress, setInProgress] = useState([]);
+    const [plans, setPlans] = useState([]);
+    const [visitordataloaded, setVisitordataloaded] = useState(false);
     // Function to fetch all blog posts
+    const [selectedSkills, setSelectedSkills] = useState([]);
+    const [expertloading, setexpertloading] = useState(false);
+    const [expertedit, setexpertedit] = useState(false);
+    
     const fetchBlogPosts = async () => {
       setLoading(true);  // Set loading to true when request starts
       setError(null);    // Clear any previous errors
@@ -83,6 +112,19 @@ export const VeeContextProvider = ({ children }) => {
         setRoleMatchLoading(false);
       }
     };
+
+
+    const fetchTrainingPosts = async () => {
+      setloadingTraining(true);  // Set loading to true before fetching data
+      try {
+          const response = await axios.get('https://bsjobapi.vercel.app/create_training_post/');
+          setTraining(response.data);  // Update state with fetched data
+      } catch (error) {
+          console.error("Error fetching training posts:", error);
+      } finally {
+          setloadingTraining(false);  // Set loading to false after data is fetched or an error occurs
+      }
+  };
 
 
     const fetchJobs = async () => {
@@ -127,8 +169,11 @@ export const VeeContextProvider = ({ children }) => {
       try {
         setLoadingjobupdate(true);
         const response = await axiosInstance.get('/corporatedashboard');
-        setJobupdate(response.data);
-
+        setJobupdate(response.data?.jobcarddata);
+        setpublished(response.data?.published)
+        setopenroles(response.data?.open)
+        setfilled(response.data?.filled)
+        
       } catch (error) {
         setLoadingjobupdate(true)
         console.error("Error fetching job cards:", error);
@@ -231,10 +276,10 @@ export const VeeContextProvider = ({ children }) => {
             // });
             console.log("session expired");
     
-            setTimeout(function () {
-              // Redirect to success.html with the random ID as a parameter
-              router.replace("/auth/login");
-            }, 2000); // 2000 milliseconds = 2 seconds
+            // setTimeout(function () {
+            //   // Redirect to success.html with the random ID as a parameter
+            //   router.replace("/auth/login");
+            // }, 2000); // 2000 milliseconds = 2 seconds
             return Promise.reject(new Error("Access token not found"));
           }
           return config;
@@ -357,6 +402,42 @@ async function myuserdata() {
       }
       };
 
+function toggleexpert(){
+    setexpertedit(!expertedit)
+}
+const updateaoesperties = async () => {
+  const payload = {
+      aosskill: selectedSkills, // Make sure this is in the correct format
+  };
+
+  console.log(payload);
+
+  if (selectedSkills && selectedSkills.length > 0) {
+      setexpertloading(true);
+      try {
+          const response = await axiosInstance.patch('/update-aosskill/', payload, {
+              headers: {
+                  'Content-Type': 'application/json', // Explicitly set Content-Type to application/json
+              },
+          });
+          toast.success('Area Of Expertise Updated Successfully!');
+          setUserprofile(response.data);
+          toggleexpert();
+      } catch (error) {
+          toast.error(
+              error.response 
+                  ? error.response.data.message || 'Error updating Area Of Expertise' 
+                  : 'Failed to connect to server'
+          );
+          console.error(error);
+      } finally {
+          setexpertloading(false); // Ensure loading state is reset
+      }
+  } else {
+      toast.error('Please fill all fields');
+      setexpertloading(false);
+  }
+};
 
       const fetchWorkExperience = async () => {
         let accessToken = Cookies.get("access_token");
@@ -551,6 +632,76 @@ const savejob = async (id) => {
 };
 
 
+const generatetrainingpost = async ({ trainingtitle }) => {
+  console.log(trainingtitle)
+  const prompt = `Write an incredibly captivating and highly detailed training/seminar post with the title "${trainingtitle}". The post should include the following in JSON format:
+  {
+    "title": "string",
+    "body": "A detailed and descriptive body that introduces the training/seminar, highlights the key aspects, and explains the overall purpose of the seminar.",
+    "category": "string",
+    "modulesContent": [
+      {
+        "moduleTitle": "string",
+        "moduleBody": "A comprehensive and detailed description of the module, including the key points, objectives, and what participants will learn."
+      },
+      {
+        "moduleTitle": "string",
+        "moduleBody": "A comprehensive and detailed description of the module, including the key points, objectives, and what participants will learn."
+      },
+      {
+        "moduleTitle": "string",
+        "moduleBody": "A comprehensive and detailed description of the module, including the key points, objectives, and what participants will learn."
+      },
+      {
+        "moduleTitle": "string",
+        "moduleBody": "A comprehensive and detailed description of the module, including the key points, objectives, and what participants will learn."
+      }
+    ]
+  }
+  Ensure that the body and each module description are elaborate, with enough details to give the reader a clear understanding of the value and purpose of the seminar.`;
+if(trainingtitle) {
+  try {
+    const res = await axios.post(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
+      {
+        contents: [
+          {
+            parts: [
+              {
+                text: prompt,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    let generatedText = res.data.candidates[0].content.parts[0].text;
+    // const generatedText = res.data.candidates[0].content.parts[0].text;
+    // const parsedResponse = JSON.parse(generatedText); // Parse the response to map it to state variables
+    generatedText = generatedText.replace(/```json|```/g, '').trim();
+
+    const parsedResponse = JSON.parse(generatedText);
+
+
+    return parsedResponse;
+  } catch (error) {
+    console.error('Error:', error);
+    return null;
+  }
+}else{
+  toast.info('No Title Supplied')
+}
+
+};
+
+
+
+
 const deleteUniversityRecord = async (universityId) => {
   try {
     const response = await axiosInstance.delete(`/delete-university-record/${universityId}/`);
@@ -579,8 +730,13 @@ const deleteWorkExperience = async (experienceId) => {
 
 
 function refetchdata(){
-  userdata(),
-  fetchUniversities(),
+  userdata()
+  fetchUniversities()
+  let accessToken = Cookies.get("access_token");
+  if (accessToken) {
+
+
+
   fetchprofile(),
   fetchJobs(),
   fetchWorkExperience(),
@@ -589,18 +745,495 @@ function refetchdata(){
   fetchuserApplications(),
   fetchjobupdate(),
   fetchcompanyJobs(),
-  fetchRoleMatch()
+  fetchRoleMatch();
+  }
 }
+
+
+
+
+function newupdateactiveuser(id){
+
+  console.log('clickedddddddd')
+
+      setActivechat(id);
+
+    
+
+
+      updateActiveUser(id);
+    }
+
+
+    function updateActiveUser(id) {
+      
+      
+      let active = id;
+      console.log('active is ', active);
+      console.log('all chat is',  chatdata);
+      console.log(allChat)
+      if (!allChat.some(profile => profile.to_id == active || profile.from_id == active)) {
+      console.log('waitttt')
+      } else{
+        const myactiveProfile = allChat.find(profile => profile.to_id == active || profile.from_id == active);
+
+
+     const activeuser = chatdata.find(profile => String(profile.userid) === String(active));
+       
+        setActiveprofile(myactiveProfile)
+        console.log('active user is', activeuser);
+        setActivechatdata(activeuser)
+        setconversationdata(myactiveProfile.conversationDatas);
+        console.log('convo data is', conversationdata);
+        const filteredArray = conversationdata?.filter(obj => obj?.imageUrl && obj.type !== "deleted");
+      }
+
+
+  
+
+  }
+
+
+function fdata() {
+  axiosInstance.get('/chatdashboard') // Update endpoint for protected route
+    .then(response => {
+      console.log(response)
+      continuation(response)
+      setgottendata(response.data.usecase)
+      console.log('fetchedddddddddddddddddddd')
+    })
+    .catch(error => {
+      console.error(error.message);
+
+    });
+}
+
+function formatChatDateTime(dateString) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+
+  if (diffInDays === 0) {
+    // Today: Show only time
+    const options = {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  } else if (diffInDays === 1) {
+    // Yesterday: Show 'Yesterday'
+    return 'Yesterday';
+  } else {
+    // Other days: Show date in the format 'MM-DD-YYYY'
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}-${day}-${year}`;
+  }
+}
+function getlasttime(id){
+  const now = new Date();
+  const mygdata = gottendata.find(gd => gd?.messageid?.messageid == id )
+  
+  if( mygdata  ){
+
+    if(mygdata?.testj?.length > 0){
+
+      return formatChatDateTime(mygdata?.testj?.pop()?.messagetime);
+
+    }else{
+     
+     return formatChatDateTime(now);
+    }
+    
+  } 
+  else{
+    return formatChatDateTime(now);
+  }
+
+}
+
+
+function continuation(response){
+  console.log('continue', response)
+  const access = Cookies.get("access_token");
+  const arrayToken = access.split('.');
+  const tokenPayload = JSON.parse(atob(arrayToken[1]));
+  console.log(tokenPayload)
+  setactiveuserid(tokenPayload?.user_id)
+  let data = response?.data?.usecase
+  let allusers = response?.data?.allprofile
+  let newArray = [];
+  let allusersarray = []
+
+  if (data?.length > 0) {
+    data.forEach(item => {
+      const isSender = item?.sender?.id === tokenPayload?.user_id;
+      const isReceiver = item?.reciever?.id === tokenPayload?.user_id;
+  
+      const user = isSender ? item.reciever : item.sender;
+      const profile = isSender ? item.receiver_profile : item.sender_profile;
+  
+      newArray.push({
+        id: isSender ? item.reciever.id : item.sender.id,
+        userid: item.id,
+        message_id: item.messageid,
+        name: `${user.first_name} ${user.last_name}`,
+        time: getlasttime(item.messageid),
+        lastSeen: profile?.last_seen,
+        phoneNumber: profile.phonenumber,
+        email: user.email,
+        avatar: profile?.avatar,
+      });
+    });
+    
+  }
+
+    if (allusers.length > 0) {
+      allusers.forEach(item => {  
+       
+        allusersarray.push({
+          id: item?.user?.id,
+          name: `${item?.user?.first_name} ${item?.user?.last_name}`,
+          avatar: item?.avatar,
+          userid: item?.user?.id,
+          email: item?.user?.email,
+          lastSeen: item?.last_seen,
+          phoneNumber: item?.phonenumber,
+        });
+
+    })
+  }
+
+
+  setAllprofile(allusersarray)
+
+  setChatdata(newArray)
+  console.log('chatdata', newArray)
+
+  fdatatwo(newArray)
+}
+
+let temporarydata 
+function aud (id) {
+  
+  // console.log('temp', temporarydata.find(au => au.userid == id || au.id == id))
+  return  temporarydata.find(au => au.userid == id || au.id == id)
+  }
+
+async function fdatatwo(data) {
+  let allfetchmessage = []
+  const access = Cookies.get("access_token");
+  const arrayToken = access.split('.');
+  const tokenPayload = JSON.parse(atob(arrayToken[1]));
+
+  temporarydata= data
+
+  try {
+    const response = await axiosInstance.get('/messagedashboard');
+    console.log(response);
+ 
+    // Redirect to success.html with the random ID as a parameter
+
+    response?.data?.allmessages.forEach(item => {  
+
+      if (item?.messageid?.sender?.id === tokenPayload?.user_id) {
+      allfetchmessage.push({
+        'chat_id': item?.messageid?.messageid,
+         from_id: tokenPayload?.user_id, 
+         to_id: aud(item?.messageid?.reciever?.id)?.userid,
+          conversationDatas: item.testj
+      });
+
+    }
+    else if (item?.messageid?.reciever?.id === tokenPayload?.user_id) {
+      allfetchmessage.push({
+        'chat_id': item?.messageid?.messageid,
+         from_id: aud(item?.messageid?.sender?.id,)?.userid, 
+         to_id:  tokenPayload?.user_id ,
+          conversationDatas: item.testj
+      });
+
+
+    }
+
+  
+    })
+    setAllchat(allfetchmessage) 
+    // sortmessages(response?.data?.allmessages)
+    
+
+
+  } catch (error) {
+    console.error(error.message);
+    toast.error(error.message || 'An Error Occurred')
+  }
+
+}
+
+async function acceptvisitor(ref){
+  if (ref){
+    if (ref !== 'close') {
+      setloadingaccept(true)
+         try {
+           const payload = {
+             post_id: ref,
+           };
+     
+           // Define endpoint
+           const endpoint = '/acceptvisitor';
+           
+           // Make the POST request
+           const response = await axiosInstance.post(endpoint, payload);
+     
+           if (response.status == 200) {
+             console.log('response', response);
+      
+             toast.success('Visitation details updated successfully');
+             setVisitationdata(response.data?.visitorsdata);
+             setVisitors(response.data?.visitorserializer);
+            //  clearSearchParams();
+           }
+           setloadingaccept(false);
+           togglevisitorbar('close');
+         } catch (error) {
+           if (error.response) {
+             // Server responded with a status other than 200 range
+             toast.error(error?.response?.data?.message);
+             toast.error('An Error Occured')
+             console.log(error)
+           } else if (error.request) {
+             // Request was made but no response received
+             toast.error('No response received from the server.');
+           } else {
+             // Something else happened in setting up the request
+             toast.error(error.message || 'No response received from the server.');
+           }
+         } finally {
+      
+           setloadingaccept(false);
+         }
+       }
+  }
+  
+    };
+
+
+const togglevisitorbar = async (ref) => {
+  setisVistorbaropen((prevState) => !prevState);
+  
+  if (ref !== 'close') {
+    setsideloading(true);
+setVisitationdata([])
+    try {
+      const payload = {
+        post_id: ref,
+      };
+
+
+      
+      // Define endpoint
+      const endpoint = 'https://bsjobapi.vercel.app/getvisitordetails';
+      
+      // Make the POST request
+      const response = await axios.post(endpoint, payload);
+
+      if (response.status === 200) {
+        console.log('response', response);
+        setVisitationdata(response.data?.visitorsdata);
+        toast.success('Visitation details fetched successfully');
+      }
+    } catch (error) {
+      if (error.response) {
+        // Server responded with a status other than 200 range
+        toast.error(error.response.data.message);
+      } else if (error.request) {
+        // Request was made but no response received
+        toast.error('No response received from the server.');
+      } else {
+        // Something else happened in setting up the request
+        toast.error(error.message || 'No response received from the server.');
+      }
+    } finally {
+      setsideloading(false);
+    }
+  }
+};
+
+async function signout(ref){
+  if (ref){
+    if (ref !== 'close') {
+      setloadingaccept(true)
+         try {
+           const payload = {
+             post_id: ref,
+           };
+     
+           // Define endpoint
+           const endpoint = '/logoutvisitor';
+           
+           // Make the POST request
+           const response = await axiosInstance.post(endpoint, payload);
+     
+           if (response.status === 200) {
+             console.log('response', response);
+      
+             toast.success('Visitor LoggedOut Successfully');
+             setVisitationdata(response.data?.visitorsdata);
+             fetchvisitors();
+           }
+           setloadingaccept(false);
+           togglevisitorbar('close');
+         } catch (error) {
+           if (error.response) {
+             // Server responded with a status other than 200 range
+             toast.error(error.response.data.error);
+           } else if (error.request) {
+             // Request was made but no response received
+             toast.error('No response received from the server.');
+           } else {
+             // Something else happened in setting up the request
+             toast.error(error.message || 'No response received from the server.');
+           }
+         } finally {
+      
+           setloadingaccept(false);
+         }
+       }
+  }
+  
+};
+
+const fetchvisitors = () => {
+  const accessToken = Cookies.get("access_token");
+  const decodedToken = jwtDecode(accessToken);
+  if (accessToken && decodedToken.is_corporate ) {
+    axiosInstance
+      .get("/visitor")
+      .then((response) => {
+        // Check if response is successful
+        if (response.data) {
+          setVisitors(response.data);
+          console.log(response.data)
+          const myvisitors = response.data
+          setVisitordataloaded(true);
+          if(myvisitors){
+            const pendingVisitors = myvisitors.filter(
+              (visitor) => visitor.status == "pending_approval"
+            );
+            const resheduleVisitors = myvisitors.filter(
+              (visitor) => visitor.status === "reshedule"
+            );
+            const inProgressVisitors = myvisitors.filter(
+              (visitor) => visitor.status === "inprogress"
+            );
+            const awaitingvisitors = myvisitors.filter(
+              (visitor) => visitor.status === "awaiting_confirmation"
+            );
+        
+            setPendingApproval(pendingVisitors);
+            setReshedule(resheduleVisitors);
+            setInProgress(inProgressVisitors);
+            setAwaiting(awaitingvisitors);
+            setVisitordataloaded(true);
+          }
+
+          // console.log('veezitors', response.data);
+        } else {
+          toast.error(`Anssssssss Error Occured`);
+          throw new Error("Network response was not ok");
+        }
+      })
+      .catch((error) => {
+        // Handle request error
+
+        toast.error(`An Error Occured`);
+        // You can handle errors or display them as needed
+      });
+  }
+};
+
+
+const fetchevents = () => {
+  const accessToken = Cookies.get("access_token");
+  const decodedToken = jwtDecode(accessToken);
+  if (accessToken && decodedToken.is_corporate ) {
+    axiosInstance
+      .get("/mycourses")
+      .then((response) => {
+        // Check if response is successful
+        if (response.data) {
+          setMyevents(response.data);
+          setLoadingevents(false)
+          console.log(response.data)
+
+
+          // console.log('veezitors', response.data);
+        } else {
+          toast.error(`Anssssssss Error Occured`);
+          throw new Error("Network response was not ok");
+        }
+      })
+      .catch((error) => {
+        // Handle request error
+
+        toast.error(`An Error Occured`);
+        // You can handle errors or display them as needed
+      });
+  }
+};
+
+
+function sortmessages(data ){
+  // temporarydata = data
+  let allfetchmessage = []
+  const access = Cookies.get("access_token");
+  const arrayToken = access.split('.');
+  const tokenPayload = JSON.parse(atob(arrayToken[1]));
+  data.forEach(item => { 
+    if (item?.messageid?.sender?.id === tokenPayload?.user_id) {
+    allfetchmessage.push({
+      'chat_id': item?.messageid?.messageid,
+       from_id: tokenPayload?.user_id, 
+       to_id: aud(item?.messageid?.reciever?.id)?.userid,
+        conversationDatas: item.testj
+    });
+
+  }
+  else if (item?.messageid?.reciever?.id === tokenPayload?.user_id) {
+    allfetchmessage.push({
+      'chat_id': item?.messageid?.messageid,
+       from_id: aud(item?.messageid?.sender?.id,)?.userid, 
+       to_id:  tokenPayload?.user_id ,
+        conversationDatas: item.testj
+    });
+
+
+  }
+
+
+  })
+  setAllchat(allfetchmessage) 
+  if(activechat){
+    newupdateactiveuser(activechat)
+  }
+  // setAllchat(allfetchmessage) 
+  // console.log('all fetch', allfetchmessage)
+}
+
 
 useEffect(() => {
   async function fetchData() {
     try {
       // Run all asynchronous functions in parallel using Promise.all
       await Promise.all([
+        userdata(),
         fetchUniversities(),
         fetchprofile(),
-        userdata(),
         fetchJobs(),
+        fdata(),
+        fetchvisitors(),
         fetchWorkExperience(),
         fetchUniversitiesdata(),
         fetchsavedJobs(),
@@ -608,6 +1241,8 @@ useEffect(() => {
         fetchjobupdate(),
         fetchcompanyJobs(),
         fetchRoleMatch(),
+   
+        fetchTrainingPosts()
  
       ]);
     } catch (error) {
@@ -668,8 +1303,48 @@ useEffect(() => {
              setCurrentStep,
              deleteUniversityRecord,
              deleteWorkExperience,
-             setUserprofile
-            
+             setUserprofile,
+             published,
+             filled,
+             openroles,
+             allprofiles,
+             chatdata,
+             newupdateactiveuser,
+             activeuserid,
+             activechat,
+             activechatdata,
+             conversationdata,
+             setconversationdata,
+             sortmessages,
+             fdata,
+             training,
+             loadingtraining,
+             fetchTrainingPosts,
+             togglevisitorbar,
+             sideloading, 
+             setsideloading,
+             acceptvisitor,
+             loadingaccept,
+             signout,
+             fetchvisitors,
+             visitordataloaded,
+             awaiting,
+             pendingApproval,
+             reshedule,
+             inProgress,
+             visitors,
+             isvisitorbaropen,
+             generatetrainingpost,
+             visitationdata,
+             myevents,
+             loadingevents,
+             expertloading,
+              setexpertloading,
+              expertedit,
+              toggleexpert,
+              selectedSkills,
+              setSelectedSkills,
+              updateaoesperties
             
           
           }}

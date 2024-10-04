@@ -5,22 +5,38 @@ import Topnav from '../Topnav'
 import Pageloader from '../Pageloader'
 import { usePathname,  } from 'next/navigation';
 import { VeeContext } from "@/components/context/Chatcontext";
+import Visitationbar from './Visitationbar'
 const Layout = ({children}) => {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+
+
+
+
+
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+    setIsOverlayOpen((prevState) => !prevState);
+  };
   const {
     hideLoader, 
     setHideLoader,
     loaderVisible, 
     setLoaderVisible,
     userprofile,
-    profileloaded
+    sideloading, 
+    axiosInstance,
+    profileloaded, isvisitorbaropen, setisVistorbaropen, togglevisitorbar ,visitationdata,
+    acceptvisitor,
+    loadingaccept,
+    signout,
+    fetchvisitors
    } = useContext(VeeContext);
 
 
-
-  useEffect(() => {
+   useEffect(() => {
     if (!hideLoader) {
       const handlePageLoad = () => {
         // Start sliding out the loader
@@ -42,19 +58,20 @@ const Layout = ({children}) => {
       return () => window.removeEventListener('load', handlePageLoad);
     }
   }, [hideLoader]);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prevState) => !prevState);
-    setIsOverlayOpen((prevState) => !prevState);
-  };
-
   return (
     <div>
+
+<Visitationbar  signout={signout} fetchvisitors={fetchvisitors}    axiosInstance={axiosInstance}  acceptvisitor={acceptvisitor} loadingaccept={loadingaccept}   togglevisitorbar={togglevisitorbar} visitationdata={visitationdata}  sideloading={sideloading} isvisitorbaropen={isvisitorbaropen} setisVistorbaropen={setisVistorbaropen} />
+
        {loaderVisible && profileloaded  && (
 
           <Pageloader  hideLoader={hideLoader} />
    
       )}
+
+
+
+
       
          <div className={`overlay ${isOverlayOpen ? 'overlayshow' : ''}`} onClick={toggleSidebar} />
         <div className="container">

@@ -177,7 +177,7 @@ const page = () => {
       />
 </div>
 
-<small>By signing up, I agree to the terms of use and policy of the BoardSeats.</small>
+<small>By signing up, I agree to the terms of use and policy of the Veeseats.</small>
 {isLoading ?        
    <button id="loadingBtn" className='mybtn' >
 

@@ -1,8 +1,15 @@
+import Corporateprofile from '@/components/Corporateprofile'
+import Layout from '@/components/dashboard/Layout'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <Layout>
+    <div className="dashboard gaptransiton">
+    <br />
+   <Corporateprofile/>
+   </div>
+   </Layout>
   )
 }
 

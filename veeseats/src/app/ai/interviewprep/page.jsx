@@ -6,6 +6,7 @@ import Radio from '@/components/utils/Radio';
 import Typewriter from '@/components/utils/Typewriter';
 import UserDetailsForm from '@/components/utils/UserDetailsForm';
 import axios from 'axios';
+import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -116,10 +117,12 @@ const Page = () => {
       .post("https://bsjobapi.vercel.app/ai-model/create/", userdetails[0])
       .then((response) => {
         console.log('Response:', response.data);
-        handleStep(6.6);  // Navigate to next step
+         // Navigate to next step
         const uploaded_model_id = localStorage.setItem('uploaded_model_id', response.data.ref_id);
-        setmodelupload(response.data);
+        setmodelupload(response.data);  
+        setmodelRefId(response.data.ref_id);
         setIsloading(false);  // Stop loading
+        handleStep(6.6); 
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -551,14 +554,15 @@ onDone={() => handleStep(6.3)}
     speed={10}
   
   />
+  <Link href={`/ai/playground/${modelupload?.ref_id || modelrefId}`}>Playground Link, Please Save Somewhere Safe</Link>
            </div>
 )}
 
 <br />
 <div className="refreshchatdiv">
-<span className="material-symbols-outlined">
+{/* <span className="material-symbols-outlined">
 add
-</span>
+</span> */}
 
 <span class="material-symbols-outlined" onClick={resetgame}>
 cycle
@@ -574,7 +578,7 @@ ios_share
           </div>
         </div>
 
-        {step === 5 && (
+        {step === 8 && (
           <div className="chatbar">
             <div className="chatinput">
               <div className="buttonicon greyicon">

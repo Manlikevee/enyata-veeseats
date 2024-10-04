@@ -1,93 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Favicon Generator with Preview</title>
-  <style>
-    #favicon-preview {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #favicon-preview img {
-      border: 1px solid #ccc;
-      padding: 5px;
-      margin-top: 10px;
-    }
-    input[type="text"] {
-      padding: 8px;
-      width: 100%;
-      max-width: 400px;
-    }
-    button {
-      margin-top: 10px;
-      padding: 8px 16px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Image Uploader</title>
+    <style>
+        .json-output {
+            white-space: pre-wrap;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-  <div>
-    <h2>Generate Favicon from Image URL</h2>
-    <input type="text" id="image-url-input" placeholder="Enter image URL here" />
-    <button onclick="generateFavicon()">Create Favicon</button>
-  </div>
-  
-  <div id="favicon-preview">
-    <h3>Favicon Preview:</h3>
-    <img id="favicon-image" alt="Favicon Preview" style="display: none;" />
-  </div>
+    <h1>Bulk Image Uploader</h1>
+    
+    <input type="file" id="imageUploader" multiple accept="image/*" />
+    <div id="jsonOutput" class="json-output"></div>
 
-  <canvas id="canvas" style="display: none;"></canvas>
+    <script>
+        document.getElementById('imageUploader').addEventListener('change', function(event) {
+            const files = event.target.files;
+            const iconsArray = [];
 
-  <script>
-    function generateFavicon() {
-      const imageUrl = document.getElementById('image-url-input').value;
-      if (!imageUrl) {
-        alert("Please enter a valid image URL!");
-        return;
-      }
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const imageName = file.name;
+                const imagePath = `/icons/${imageName}`;
+                
+                iconsArray.push({
+                    name: imageName,
+                    path: imagePath
+                });
+            }
 
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      img.crossOrigin = 'Anonymous'; // Important for cross-origin images
-
-      img.onload = () => {
-        // Set the canvas size to 32x32 (favicon size)
-        canvas.width = 32;
-        canvas.height = 32;
-
-        // Draw the image to the canvas and scale it down
-        ctx.drawImage(img, 0, 0, 32, 32);
-
-        // Convert the canvas to a data URL
-        const faviconUrl = canvas.toDataURL('image/png');
-
-        // Update the favicon preview image
-        const faviconImage = document.getElementById('favicon-image');
-        faviconImage.src = faviconUrl;
-        faviconImage.style.display = 'block';
-
-        // Apply the favicon to the page
-        const existingFavicon = document.querySelector("link[rel='icon']");
-        if (existingFavicon) {
-          existingFavicon.href = faviconUrl;
-        } else {
-          const link = document.createElement('link');
-          link.rel = 'icon';
-          link.href = faviconUrl;
-          document.head.appendChild(link);
-        }
-      };
-
-      img.onerror = () => {
-        alert("Failed to load the image. Please check the URL and try again.");
-      };
-
-      img.src = imageUrl;
-    }
-  </script>
+            // Display the JSON in the output div
+            const jsonOutput = document.getElementById('jsonOutput');
+            jsonOutput.textContent = JSON.stringify(iconsArray, null, 2);
+        });
+    </script>
 </body>
 </html>

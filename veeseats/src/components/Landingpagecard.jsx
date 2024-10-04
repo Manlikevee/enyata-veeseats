@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Landingpagecard = ({title, subtitle, image, reverse, cta, listitems, keypoints}) => {
@@ -50,9 +51,11 @@ const Landingpagecard = ({title, subtitle, image, reverse, cta, listitems, keypo
            </div>
           )} 
 
-{cta &&   (<div className="login">
+{cta &&   (
+<Link href={'/auth/login'} className="login">
           {cta}
-          </div>)} 
+ </Link>
+          )} 
 
           </div>
           <div className="heroflextwo">

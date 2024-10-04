@@ -14,6 +14,8 @@ import EducationCreate from "@/components/EducationCreate";
 import Bioedit from "@/components/Bioedit";
 import FileUpload from "@/components/FileUpload";
 import Userdetailsedit from "@/components/Userdetailsedit";
+import Select from 'react-select';
+import CopyToClipboard from "../CopyToClipboard";
 
 const boardTypeOptions = [
     { label: "Start Up", value: "start_up" },
@@ -53,7 +55,14 @@ const boardTypeOptions = [
 const Userprofile = () => {
 
     const {generateJobDescriptionOverview,  axiosInstance, workExperience, setWorkExperience, Universities, selectedUniversity, userprofile, deleteUniversityRecord,
-      deleteWorkExperience } = useContext(VeeContext);
+      deleteWorkExperience,           
+         expertloading,
+      setexpertloading,
+      expertedit,
+      toggleexpert,
+      selectedSkills,
+      setSelectedSkills,
+      updateaoesperties } = useContext(VeeContext);
     const [checkedItems, setCheckedItems] = useState([]);
     const [profiledata, setprofiledata] = useState(null);
     const [isLoading, setIsloading] = useState(false);
@@ -61,16 +70,123 @@ const Userprofile = () => {
     const [bioedit, setBioedit] = useState(false);
     const [personaledit, setpersonaledit] = useState(false);
     const [fileuploadpopup, setfileuploadpopup] = useState(false);
-    
+
+    const [skillAreas, setSkillAreas] = useState([
+      { value: 'frontend', label: 'Frontend Development' },
+      { value: 'backend', label: 'Backend Development' },
+      { value: 'fullstack', label: 'Full Stack Development' },
+      { value: 'mobile', label: 'Mobile Development' },
+      { value: 'data', label: 'Data Science' },
+      { value: 'devops', label: 'DevOps' },
+      { value: 'uiux', label: 'UI/UX Design' },
+      { value: 'ml', label: 'Machine Learning' },
+      { value: 'cloud', label: 'Cloud Computing' },
+      { value: 'cybersecurity', label: 'Cybersecurity' },
+      { value: 'networking', label: 'Networking' },
+      { value: 'ai', label: 'Artificial Intelligence' },
+      { value: 'blockchain', label: 'Blockchain' },
+      { value: 'quantum', label: 'Quantum Computing' },
+      { value: 'iot', label: 'Internet of Things' },
+      { value: 'vr', label: 'Virtual Reality' },
+      { value: 'ar', label: 'Augmented Reality' },
+      { value: 'robotics', label: 'Robotics' },
+      { value: 'database', label: 'Database Management' },
+      { value: 'bigdata', label: 'Big Data' },
+      { value: 'game', label: 'Game Development' },
+      { value: 'aiops', label: 'AIOps' },
+      { value: 'seo', label: 'SEO Optimization' },
+      { value: 'content', label: 'Content Creation' },
+      { value: 'graphic', label: 'Graphic Design' },
+      { value: 'video', label: 'Video Editing' },
+      { value: 'photography', label: 'Photography' },
+      { value: 'writing', label: 'Creative Writing' },
+      { value: 'translation', label: 'Translation' },
+      { value: 'marketing', label: 'Digital Marketing' },
+      { value: 'smm', label: 'Social Media Management' },
+      { value: 'advertising', label: 'Advertising' },
+      { value: 'branding', label: 'Branding' },
+      { value: 'product', label: 'Product Management' },
+      { value: 'sales', label: 'Sales' },
+      { value: 'hr', label: 'Human Resources' },
+      { value: 'finance', label: 'Finance' },
+      { value: 'accounting', label: 'Accounting' },
+      { value: 'consulting', label: 'Consulting' },
+      { value: 'legal', label: 'Legal' },
+      { value: 'project', label: 'Project Management' },
+      { value: 'supply', label: 'Supply Chain Management' },
+      { value: 'logistics', label: 'Logistics' },
+      { value: 'healthcare', label: 'Healthcare Management' },
+      { value: 'nursing', label: 'Nursing' },
+      { value: 'medicine', label: 'Medicine' },
+      { value: 'pharmacy', label: 'Pharmacy' },
+      { value: 'nutrition', label: 'Nutrition' },
+      { value: 'psychology', label: 'Psychology' },
+      { value: 'counseling', label: 'Counseling' },
+      { value: 'education', label: 'Education' },
+      { value: 'teaching', label: 'Teaching' },
+      { value: 'research', label: 'Research' },
+      { value: 'architecture', label: 'Architecture' },
+      { value: 'civil', label: 'Civil Engineering' },
+      { value: 'mechanical', label: 'Mechanical Engineering' },
+      { value: 'electrical', label: 'Electrical Engineering' },
+      { value: 'chemical', label: 'Chemical Engineering' },
+      { value: 'biotech', label: 'Biotechnology' },
+      { value: 'environmental', label: 'Environmental Science' },
+      { value: 'agriculture', label: 'Agriculture' },
+      { value: 'food', label: 'Food Science' },
+      { value: 'horticulture', label: 'Horticulture' },
+      { value: 'veterinary', label: 'Veterinary Medicine' },
+      { value: 'sports', label: 'Sports Management' },
+      { value: 'fitness', label: 'Fitness Training' },
+      { value: 'yoga', label: 'Yoga Instruction' },
+      { value: 'dance', label: 'Dance' },
+      { value: 'music', label: 'Music Production' },
+      { value: 'theater', label: 'Theater Arts' },
+      { value: 'filmmaking', label: 'Filmmaking' },
+      { value: 'journalism', label: 'Journalism' },
+      { value: 'broadcasting', label: 'Broadcasting' },
+      { value: 'animation', label: 'Animation' },
+      { value: 'illustration', label: 'Illustration' },
+      { value: 'interior', label: 'Interior Design' },
+      { value: 'fashion', label: 'Fashion Design' },
+      { value: 'photography', label: 'Photography' },
+      { value: 'carpentry', label: 'Carpentry' },
+      { value: 'plumbing', label: 'Plumbing' },
+      { value: 'electrician', label: 'Electrical Work' },
+      { value: 'automotive', label: 'Automotive Repair' },
+      { value: 'aviation', label: 'Aviation' },
+      { value: 'logistics', label: 'Logistics Management' },
+      { value: 'real_estate', label: 'Real Estate' },
+      { value: 'hospitality', label: 'Hospitality Management' },
+      { value: 'culinary', label: 'Culinary Arts' },
+      { value: 'bakery', label: 'Bakery' },
+      { value: 'wine', label: 'Wine Making' },
+      { value: 'tourism', label: 'Tourism Management' },
+      { value: 'event', label: 'Event Planning' },
+      { value: 'customer_service', label: 'Customer Service' },
+      { value: 'retail', label: 'Retail Management' },
+      { value: 'ecommerce', label: 'E-commerce' },
+      { value: 'entrepreneurship', label: 'Entrepreneurship' },
+      { value: 'innovation', label: 'Innovation Management' },
+      { value: 'sustainability', label: 'Sustainability' },
+      { value: 'csr', label: 'Corporate Social Responsibility' },
+      { value: 'ngo', label: 'Nonprofit Management' },
+      { value: 'fundraising', label: 'Fundraising' },
+      { value: 'grant_writing', label: 'Grant Writing' },
+  ]);
     function togglfileemodal(){
       setfileuploadpopup(!fileuploadpopup);
     
     }
-  
+    const handleChange = (selected) => {
+      setSelectedSkills(selected);
+      console.log(selectedSkills)
+    };
   
     function togglpersonalmodal(){
       setpersonaledit(!personaledit);
     }
+    
     
   
     function togglemodal(){
@@ -171,7 +287,7 @@ const Userprofile = () => {
    <div className="globebody">
      <div className="globetopflex">
        <div className="jtitle">
-       {userprofile?.user?.first_name + ' ' + userprofile?.user?.last_name} <span>(Frontend Web Developer)</span>
+       {userprofile?.user?.first_name + ' ' + userprofile?.user?.last_name} <span></span>
        </div>
        <div className="flexx2">
          <div className="edit" onClick={togglpersonalmodal}>
@@ -183,9 +299,9 @@ const Userprofile = () => {
        </div>
      </div>
      <div className="timeblock">
-       <div className="jfrom">2021-12-03 —</div>
-       <div className="jto">2022-12-03</div>
-       <div className="jperiod">7 yrs 3 months</div>
+       <div className="jfrom"><CopyToClipboard myid={userprofile?.profuuid}/></div>
+       {/* <div className="jto">2022-12-03</div> */}
+       {/* <div className="jperiod">7 yrs 3 months</div> */}
      </div>
      <div className="jobdescription overview-text-subheader">
  
@@ -330,14 +446,52 @@ const Userprofile = () => {
            </div>
          </Titleddiv>
  
-         <Titleddiv title={"Area of Expertise"}>
+
+         <Titleddiv title={"Area of Expertise"} myfunc={toggleexpert}>
+          {expertedit && (    <div className="miniforminput">
+    <label htmlFor='Country'>skillAreas</label>
+    <div className="miniforminputdata ">
+
+    <Select
+    isMulti
+    name="colors"
+    options={skillAreas}
+    className="basic-multi-select"
+    classNamePrefix="select"
+    onChange={handleChange}
+  />
+    </div>
+    </div> )}
+
            <div className="skillgrid">
-             {areasOfExpertise.map((expertise, index) => (
+             {userprofile?.aosskill?.map((expertise, index) => (
                <div key={index} className="skillcard">
-                 {expertise}
+                 {expertise?.label}
                </div>
              ))}
            </div>
+
+           {expertedit && 
+           <div className="mybtns">
+        <button className="mybtnwhite" onClick={toggleexpert}>
+          Cancel
+        </button>
+  
+
+        {expertloading ?        
+   <button id="loadingBtn" className='mybtn' >
+
+   <span className='loading-spinner'></span> 
+    </button>
+        :
+        <button className="mybtn" onClick={updateaoesperties}>
+        Save
+      </button>
+         }
+
+      </div> }
+
+           <br />
          </Titleddiv>
  
          <Titleddiv title={"Board Preference"}>
