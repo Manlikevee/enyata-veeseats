@@ -1,15 +1,16 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Layout from "@/components/dashboard/Layout";
 import Titleddiv from "@/components/Titleddiv";
 import Link from 'next/link';
 import { Toaster, toast } from 'sonner'
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
+import { VeeContext } from '@/components/context/Chatcontext';
 const page = () => {
   const [email, setemail] = useState(null);
-
-
+  const [loading, setLoading] = useState(false);
+  const {  axiosInstance } = useContext(VeeContext);
   useEffect(() => {
     let accessToken = Cookies.get("access_token");
     const decodedToken = jwtDecode(accessToken);
@@ -17,6 +18,51 @@ const page = () => {
       setemail(decodedToken.email)
     }
   }, [ ]);
+
+
+  const fetchPublicKey = async () => {
+        setLoading(true); // Set loading to true before the request
+        try {
+            const response = await axiosInstance.get('/api/create-key/');
+            const { token } = response.data; // Extract the token from the response
+
+            // Use the token as publicKey
+            const publickey = token;
+
+            // Code to be copied
+            const codeToCopy = `
+                <div class="veeseatsjobcards"></div>
+                <script src="https://veeseats.netlify.app/veeseats.js"></script>
+                <script>
+                    displaymyjobs(publickey='${publickey}', displaydivid='');
+                </script>
+            `;
+
+            // Copy the code to clipboard
+            copyToClipboard(codeToCopy);
+            
+            // Show toast notification
+            toast.success('Code copied to clipboard!');
+        } catch (error) {
+            console.error('Error fetching public key:', error);
+            // Optionally show error toast
+            toast.error('Failed to fetch the public key.');
+        } finally {
+            setLoading(false); 
+        }
+    };
+
+
+
+    // Function to copy text to clipboard
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            console.log('Text copied to clipboard');
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+        });
+    };
+
 
   return (
     <Layout>
@@ -46,12 +92,12 @@ const page = () => {
     </div>
     <div className="profileitem">
       <div className="proflabel">Start date</div>
-      <div className="profvalue">September 14, 2024</div>
+      <div className="profvalue">September 30, 2024</div>
     </div>
 
     <div className="profileitem">
       <div className="proflabel">Expiry date</div>
-      <div className="profvalue">October 14, 2021</div>
+      <div className="profvalue">October 30, 2024</div>
     </div>
 
     <div className="profileitem">
@@ -83,12 +129,18 @@ Manage access to your account  <Link href={'/settings/change-password'}>Change P
 </Titleddiv>
 
 
-<Titleddiv title={"Deactivate Account"}>
+<Titleddiv title={"Embed Jobs"}>
 
-Do you want to deactivate your account? By deactivationg your account you will loose all the content associated with it
+With Veeseats, you can effortlessly showcase the jobs you’ve posted on our platform directly on your company’s website or any website of your choice. Our seamless integration allows you to display your job listings in just a few simple steps, enhancing your recruitment process and attracting top talent. Let your opportunities shine where your audience is already looking!
 
 <br />
-<div className="profvalue"><div className='mybbn'>Deactivate my account</div></div>
+<div className="profvalue">
+
+
+<button className='mybbn'  onClick={fetchPublicKey} disabled={loading}>
+{loading ? 'Loading...' : 'Copy Integration Code'}
+</button>
+</div>
 </Titleddiv>
 <br />
 <br />

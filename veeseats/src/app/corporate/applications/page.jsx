@@ -16,7 +16,7 @@ const page = () => {
     { id: 0, label: 'All' },
     { id: 1, label: 'Open Roles' },
     { id: 2, label: 'Unpublished Roles' },
-    { id: 3, label: 'Filled Roles' },
+    { id: 3, label: 'All Applications' },
 
   ];
   return (

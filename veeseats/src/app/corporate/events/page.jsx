@@ -97,7 +97,7 @@ loop={false}
                 <div className="dashtext">
 <div className="num">
 
-{jobupdate && !Loadingjobupdate ? (published) : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
+{myevents && !loadingevents ? (myevents.length) : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
 </div>
 <div className="label">Events</div>
                 </div>
@@ -112,7 +112,7 @@ loop={false}
 
                 <div className="dashtext">
 <div className="num">
-{jobupdate && !Loadingjobupdate ? (filled) : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
+{visitors && visitordataloaded ? (visitors?.length) : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
 </div>
 <div className="label">Users</div>
                 </div>

@@ -60,7 +60,8 @@ const Templateone = () => {
               </div>
       
               <div className="growsub">
-              {userCV?.userprofile?.country + ', ' + userCV?.userprofile?.city + ', ' + userCV?.userprofile?.region + ', ' +  userCV?.userprofile?.phonenumber}
+              {userprofile?.portfolioUrl || ''}
+              {/* {userCV?.userprofile?.country + ', ' + userCV?.userprofile?.city + ', ' + userCV?.userprofile?.region + ', ' +  userCV?.userprofile?.phonenumber} */}
               {/* 2207 Beach Avenue, Los Angeles, rosemariesoto@email.com, (914) 479-6342 */}
               </div>
       
@@ -213,7 +214,7 @@ const Templateone = () => {
                  </div> */}
 
                  <div className="skillgrid">
-             {userCV?.aosskill?.map((expertise, index) => (
+             {userCV.userprofile?.aosskill?.map((expertise, index) => (
                <div key={index} className="skillcard">
                  {expertise?.label}
                </div>

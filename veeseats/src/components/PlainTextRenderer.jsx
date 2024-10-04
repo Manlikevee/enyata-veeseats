@@ -29,7 +29,7 @@ const PlainTextRenderer = ({ content }) => {
     setPlainText(cleanedText.trim());
   }, [content]);
 
-  return <>{plainText}</>;
+  return plainText;
 };
 
 export default PlainTextRenderer;

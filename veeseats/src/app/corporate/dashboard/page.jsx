@@ -96,7 +96,7 @@ loop={false}
                 </div>
                 <div className="dashtext">
 <div className="num">
-{jobupdate && !Loadingjobupdate ? (published) : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
+{jobupdate && !Loadingjobupdate ? ('0') : (<div className='shimmer '>   <Lazytext size={3}/> </div>) }
 </div>
 <div className="label">Filled Roles</div>
                 </div>

@@ -75,7 +75,12 @@ export const VeeContextProvider = ({ children }) => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [expertloading, setexpertloading] = useState(false);
     const [expertedit, setexpertedit] = useState(false);
-    
+    const [portfolioUrl, setPortfolioUrl] = useState(''); // State to hold the portfolio URL
+    const [portfolioeditloading, setPortfolioEditLoading] = useState(false); // Loading state for portfolio edit
+    const [portfolioeditmode, setPortfolioEditMode] = useState(false); // Edit mode toggle for portfolio
+
+    // Function to toggle edit mode
+
     const fetchBlogPosts = async () => {
       setLoading(true);  // Set loading to true when request starts
       setError(null);    // Clear any previous errors
@@ -321,6 +326,7 @@ export const VeeContextProvider = ({ children }) => {
         try {
           setLoadingApplication_detail(true);
           const response = await axiosInstance.get(`/applicationpreview/${id}`);
+          console.log(response.data)
           return response.data
         } catch (error) {
           toast.info('An Error Occured')
@@ -1223,6 +1229,46 @@ function sortmessages(data ){
 }
 
 
+const togglePortfolioEditMode = () => {
+  setPortfolioEditMode(!portfolioeditmode);
+};
+
+// Function to update the portfolio link
+const updatePortfolio = async () => {
+  const payload = {
+      portfolioUrl: portfolioUrl, // Include the portfolio URL in the payload
+  };
+
+  console.log(payload);
+
+  if (portfolioUrl) {
+      setPortfolioEditLoading(true); // Set loading state to true
+      try {
+          const response = await axiosInstance.patch('/update-portfolio/', payload, {
+              headers: {
+                  'Content-Type': 'application/json', // Explicitly set Content-Type to application/json
+              },
+          });
+          toast.success('Portfolio Updated Successfully!');
+          // Optionally, update user profile state if necessary
+          setUserprofile(response.data); // Uncomment if you manage user profile state
+          togglePortfolioEditMode(); // Close the edit mode
+      } catch (error) {
+          toast.error(
+              error.response 
+                  ? error.response.data.detail || 'Error updating portfolio' 
+                  : 'Failed to connect to server'
+          );
+          console.error(error);
+      } finally {
+          setPortfolioEditLoading(false); // Ensure loading state is reset
+      }
+  } else {
+      toast.error('Please enter a valid portfolio URL');
+      setPortfolioEditLoading(false); // Ensure loading state is reset
+  }
+};
+
 useEffect(() => {
   async function fetchData() {
     try {
@@ -1241,8 +1287,8 @@ useEffect(() => {
         fetchjobupdate(),
         fetchcompanyJobs(),
         fetchRoleMatch(),
-   
-        fetchTrainingPosts()
+        fetchTrainingPosts(),
+
  
       ]);
     } catch (error) {
@@ -1344,7 +1390,15 @@ useEffect(() => {
               toggleexpert,
               selectedSkills,
               setSelectedSkills,
-              updateaoesperties
+              updateaoesperties,
+              portfolioUrl, 
+              setPortfolioUrl,
+              portfolioeditloading, 
+              setPortfolioEditLoading,
+              portfolioeditmode, 
+              setPortfolioEditMode,
+              togglePortfolioEditMode ,
+              updatePortfolio 
             
           
           }}

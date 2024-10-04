@@ -16,6 +16,8 @@ import FileUpload from "@/components/FileUpload";
 import Userdetailsedit from "@/components/Userdetailsedit";
 import Select from 'react-select';
 import CopyToClipboard from "../CopyToClipboard";
+import Inputcomponent from "../Inputcomponent";
+import PlainTextRenderer from "../PlainTextRenderer";
 
 const boardTypeOptions = [
     { label: "Start Up", value: "start_up" },
@@ -53,7 +55,11 @@ const boardTypeOptions = [
   
 
 const Userprofile = () => {
+  const [showFullText, setShowFullText] = useState(false);
 
+  const handleReadMoreClick = () => {
+    setShowFullText(!showFullText);
+  };
     const {generateJobDescriptionOverview,  axiosInstance, workExperience, setWorkExperience, Universities, selectedUniversity, userprofile, deleteUniversityRecord,
       deleteWorkExperience,           
          expertloading,
@@ -62,7 +68,16 @@ const Userprofile = () => {
       toggleexpert,
       selectedSkills,
       setSelectedSkills,
-      updateaoesperties } = useContext(VeeContext);
+      updateaoesperties,
+      portfolioUrl, 
+      setPortfolioUrl,
+      portfolioeditloading, 
+      setPortfolioEditLoading,
+      portfolioeditmode, 
+      setPortfolioEditMode,
+      togglePortfolioEditMode ,
+      updatePortfolio 
+    } = useContext(VeeContext);
     const [checkedItems, setCheckedItems] = useState([]);
     const [profiledata, setprofiledata] = useState(null);
     const [isLoading, setIsloading] = useState(false);
@@ -375,6 +390,86 @@ const Userprofile = () => {
            
           <img src="/linkdein.png" alt="" /> {profiledata ? (profiledata.name) : ('Connect Linkdein Account')} </button>
  </Titleddiv>
+
+         <Titleddiv title={"Portfolio"} edit myfunc={togglePortfolioEditMode}>
+
+{portfolioeditmode ? (
+
+<>
+<Inputcomponent 
+        inputState={portfolioUrl} 
+        setInputState={setPortfolioUrl} 
+        label="Portfolio Url" 
+        inputType="url" 
+        name="Portfolio Url" 
+        id="Portfolio-Url" 
+    
+      />
+
+
+           {portfolioeditmode && 
+           <div className="mybtns">
+        <button className="mybtnwhite" onClick={togglePortfolioEditMode}>
+          Cancel
+        </button>
+  
+
+        {portfolioeditloading ?        
+   <button id="loadingBtn" className='mybtn' >
+
+   <span className='loading-spinner'></span> 
+    </button>
+        :
+        <button className="mybtn" onClick={updatePortfolio}>
+        Save
+      </button>
+         }
+
+      </div> }
+</>): (
+<div className="profileitem"><div className="proflabel">Portfolio Link<span className="material-symbols-outlined">contact_mail</span> </div><div className="profvalue">
+{userprofile?.portfolioUrl || 'Null'}
+  </div></div>) }
+
+
+
+
+{userprofile?.portfolioUrl && userprofile?.portfoliobio && !portfolioeditmode  && (
+  <>
+  <div className="profileitem">
+  <span className="material-symbols-outlined">
+book_4_spark
+</span>
+    <div className="proflabel">Portfolio Summary   
+</div>
+
+  <div 
+        className={`profvalue ${showFullText ? 'show-full-text' : ''}`}
+  >
+
+<div className="scrolbox">
+<PlainTextRenderer content={userprofile?.portfoliobio} />
+</div>
+
+    </div>
+ {showFullText ? (
+        <div className="readless red" onClick={handleReadMoreClick}>Read less</div>
+      ) : (
+        <div className="readmore red" onClick={handleReadMoreClick}>
+          Read more
+        </div>
+      )}
+    </div>
+
+
+  </>
+
+
+) }
+
+ </Titleddiv>
+
+
          <Titleddiv title={"Resume"} myfunc={togglfileemodal}>
            <div className="resumebox">
              <div className="resumeflex">

@@ -6487,7 +6487,28 @@ position: fixed;
   transition: left 0.5s ease;
   padding: 20px;
 }
+.show-full-text {
+  -webkit-line-clamp: none;
+  overflow: visible;
+  display: flex;
+  transition: 0.6s ease-in-out;
+  font-size: 13.5px;
+  line-height: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.profvalue{
+  transition: 0.6s ease-in-out;
+}
+.readmore{
+  color: #a92f41;
+  padding-top: 5px;
+}
 
+.unlimitedscroll{
+
+}
 .balanced{
 display: flex;
 gap: 10px;

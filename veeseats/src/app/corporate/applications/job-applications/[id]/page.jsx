@@ -60,7 +60,7 @@ const page = () => {
 
 
   
-      <Rolefilter/>
+      {/* <Rolefilter/> */}
       <>
 
       <div>
@@ -136,13 +136,13 @@ const page = () => {
     <small className="email">{item?.individual_profile?.region || 'Ikeja'}</small>
   </div>
                 </div>
-                <div className="invdata ">23-04-2024</div>
-                <div className="invdata invdatamed"><progress value="20" max="100"></progress>  20%</div>
+                <div className="invdata ">23-04-2024 {new Date(item?.created_at).toLocaleString('en-US', { month: 'short', year: 'numeric' })}  </div>
+                <div className="invdata invdatamed"><progress value={item?.applicationreview?.matchscore || '0'} max="100"></progress>  {item?.applicationreview?.matchscore || '0'} %</div>
                 <div className="invdata"><span className='paid'>{item?.application_status}</span></div>
                 <div className="invdata invdatasmall"><span className="material-symbols-outlined">
                 more_horiz
 </span></div>
-               </div>
+               </div>item?.applicationreview?.matchscore ||
       ))
     }
   </>
