@@ -142,7 +142,7 @@ const page = () => {
                 <div className="invdata invdatasmall"><span className="material-symbols-outlined">
                 more_horiz
 </span></div>
-               </div>item?.applicationreview?.matchscore ||
+               </div>
       ))
     }
   </>
